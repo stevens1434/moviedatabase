@@ -39,7 +39,7 @@ router.get('/login', function(req, res) {
 });
 
 router.post('/login', passport.authenticate('local', {
-  successRedirect: '/home', //if successful w/ login - direct to profile (but I will eventually route to home)
+  successRedirect: '/search', //if successful w/ login - direct to profile (but I will eventually route to home)
   failureRedirect: '/auth/login', //if not successful w/ login - redirect to login page
   failureFlash: 'Invalid username and/or password', //FLASH
   successFlash: 'You have logged in' //FLASH
@@ -50,6 +50,7 @@ router.get('/logout', function(req, res) {
   req.flash('success', 'You have logged out'); //FLASH
   res.redirect('/');
 });
+
 
 // router.get('/home', function(req, res) {
 //   res.render('results');

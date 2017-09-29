@@ -5,12 +5,17 @@ var model = require('../models');
 var bodyParser = require('body-parser');
 var passport = require('../config/ppConfig');
 
-router.get('/results', function(req, res) {
+//ToDo:   findAll()
+//        search more than just db.movies (such as db. genere/actors/,etc)
+//
+router.post('/results', function(req, res) {
   db.movie.findOne( {
-    where: { name: req.body.text }
+    where: { name: req.body.name }
   }).then(function(movie) {
     res.render('results', { movie: movie });
-    console.log("__________________________", movie);
+  }).catch(function(error) {
+    console.log('_________________________________________', res.status);
+    res.status(400).render('main/404');
   });
 });
 

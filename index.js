@@ -55,8 +55,8 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
-app.get('/home', function(req, res) {
-  res.render('home');
+app.get('/search', function(req, res) {
+  res.render('search');
 })
 
 app.get('/profile', isLoggedIn, function(req, res) {
@@ -66,12 +66,12 @@ app.get('/profile', isLoggedIn, function(req, res) {
 app.use('/auth', require('./controllers/auth'));
 app.use('/home', require('./controllers/auth'));
 app.use('/results', require('./controllers/auth'));
-app.use('/home/results', require('./controllers/auth'));
+app.use('/search/results', require('./controllers/auth'));
 
 app.use('/auth', require('./controllers/movies'));
-app.use('/movies', require('./controllers/movies'));
-app.use('/movies', require('./controllers/movies'));
-app.use('/movies/results', require('./controllers/movies'));
+app.use('/search', require('./controllers/movies'));
+app.use('/search', require('./controllers/movies'));
+app.use('/search/results', require('./controllers/movies'));
 
 var server = app.listen(process.env.PORT || 3000);
 

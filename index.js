@@ -12,6 +12,8 @@ app.set('view engine', 'ejs');
 
 app.use(require('morgan')('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
+app.use(bodyParser.json());
 app.use(ejsLayouts);
 
   /*
@@ -53,11 +55,23 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
+app.get('/home', function(req, res) {
+  res.render('home');
+})
+
 app.get('/profile', isLoggedIn, function(req, res) {
   res.render('profile');
 });
 
 app.use('/auth', require('./controllers/auth'));
+app.use('/home', require('./controllers/auth'));
+app.use('/results', require('./controllers/auth'));
+app.use('/home/results', require('./controllers/auth'));
+
+app.use('/auth', require('./controllers/movies'));
+app.use('/movies', require('./controllers/movies'));
+app.use('/movies', require('./controllers/movies'));
+app.use('/movies/results', require('./controllers/movies'));
 
 var server = app.listen(process.env.PORT || 3000);
 

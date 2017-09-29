@@ -23,18 +23,34 @@
   },
   "dependencies": {
     "bcrypt": "^1.0.3",
-    "body-parser": "^1.15.1",
+    "body-parser": "^1.18.2",
+    "cli-table": "^0.3.1",
     "connect-flash": "^0.1.1",
     "dotenv": "^4.0.0",
-    "ejs": "^2.4.2",
-    "express": "^4.13.4",
-    "express-ejs-layouts": "^2.1.0",
+    "ejs": "^2.5.7",
+    "express": "^4.16.0",
+    "express-ejs-layouts": "^2.3.1",
     "express-session": "^1.15.6",
-    "morgan": "^1.7.0",
+    "morgan": "^1.9.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pg": "^6.4.1",
     "pg-hstore": "^2.3.2",
+    "rowdy-logger": "^1.0.0",
     "sequelize": "^3.30.4"
-  }
+  },
+  "description": "Express authentication template using Passport + flash messages + custom middleware",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stevens1434/moviedatabase.git"
+  },
+  "keywords": [],
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/stevens1434/moviedatabase/issues"
+  },
+  "homepage": "https://github.com/stevens1434/moviedatabase#readme"
 }

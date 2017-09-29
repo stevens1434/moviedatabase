@@ -39,7 +39,7 @@ router.get('/login', function(req, res) {
 });
 
 router.post('/login', passport.authenticate('local', {
-  successRedirect: '/', //if successful w/ login - route to root
+  successRedirect: '/home', //if successful w/ login - direct to profile (but I will eventually route to home)
   failureRedirect: '/auth/login', //if not successful w/ login - redirect to login page
   failureFlash: 'Invalid username and/or password', //FLASH
   successFlash: 'You have logged in' //FLASH
@@ -50,5 +50,32 @@ router.get('/logout', function(req, res) {
   req.flash('success', 'You have logged out'); //FLASH
   res.redirect('/');
 });
+
+// router.get('/home', function(req, res) {
+//   res.render('results');
+// });
+
+// router.get('/results', function(req, res) {
+//   db.movies.find();
+//   res.render('results');
+// });
+
+
+// router.get('/results', function(req, res) { // display a specific movie //DO I NEED TO USE JSON?
+//   db.movies.find( {
+//     where: { name: req.body.name }
+//   }).then(function(movie) {
+//
+//     console.log(movie);
+//     res.render('results', { movie: movie });
+//   });
+// });
+
+// router.post('/home', function(req, res) {
+//   db.movie.find(
+//   }).then(function(movies){
+//     res.render('results', { movies: movies});
+//   });
+// });
 
 module.exports = router;

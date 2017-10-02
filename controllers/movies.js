@@ -36,6 +36,17 @@ router.post('/results', function(req, res) {
 });
 
 
+router.get('/movies', function(req, res) {
+  db.movie.findAll( {
+    order: [["name", "ASC"]]
+  }).then(function(movie) {
+    console.log("______movie", movie[1]);
+    res.render('movies', {movie: movie });
+  }).catch(function(error) {
+    res.status(400).render('main/404'); //ToDO: make 404 page work
+  });
+});
+
 
 
 

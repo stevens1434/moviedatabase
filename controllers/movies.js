@@ -40,14 +40,37 @@ router.get('/movies', function(req, res) {
   db.movie.findAll( {
     order: [["name", "ASC"]]
   }).then(function(movie) {
-    console.log("______movie", movie[1]);
+    // console.log("______movie", movie[1]);
     res.render('movies', {movie: movie });
   }).catch(function(error) {
     res.status(400).render('main/404'); //ToDO: make 404 page work
   });
 });
 
-
+router.get('/movies/:id', function(req, res) {
+  db.movie.find( {
+    where: { id: req.params.id }
+  }).then(function(movie) {
+    console.log("______movie", movie);
+    res.render('movieid', {movie: movie });
+  }).catch(function(error) {
+    res.status(400).render('main/404'); //ToDO: make 404 page work
+  });
+});
+//
+// router.get('/:id', function(req, res) {
+//   db.post.find({
+//     where: { id: req.params.id },
+//     include: [db.author]
+//   })
+//   .then(function(post) {
+//     if (!post) throw Error();
+//     res.render('posts/show', { post: post });
+//   })
+//   .catch(function(error) {
+//     res.status(400).render('main/404');
+//   });
+// });
 
 
 

@@ -28,7 +28,7 @@ router.post('/results', function(req, res) {
   }).then(function(movie) {
     console.log("______dbAndApi", dbAndApi.movieList);
     dbAndApi.movie = movie;
-      res.render('results', {dbAndApi: dbAndApi });
+    res.render('results', {dbAndApi: dbAndApi });
   }).catch(function(error) {
     // console.log('_________________________________________', res.status);
     res.status(400).render('main/404'); //ToDO: make 404 page work

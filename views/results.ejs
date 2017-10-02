@@ -1,14 +1,4 @@
-<style>
-#oneFound {
-    display: none;
-}
-#manyFound {
-    display: none;
-}
-#noneFound {
-    display: none;
-}
-</style>
+
 
 
 <h1><%= dbAndApi.movie.name %></h1>
@@ -20,11 +10,8 @@
 
 <br><br>
 
-<p><%= dbAndApi.movieList %></p>
+<h3>Movie Name: <strong><%= dbAndApi.movieList[0].Title %></strong></h3>
 
-<br> <br>
-<input id="grabData" class="btn btn-primary" type="submit" value="Pull IMDB Movie Data">
-<br><br>
 
 <script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
@@ -33,45 +20,25 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 
-<% var length = dbAndApi.movieList.length; %>
-<% var oneFound = $('#oneFound'); %>
-<% var manyFound = $('#manyFound'); %>
-<% var noneFound = $('#noneFound'); %>
-<% $('#grabData').on('click', function() { %>
-  <% if (dbAndApi.movieList === 1) { %>
-    <% oneFound.show(); %>
-  <% } else if (dbAndApi.movieList > 1) { %>
-    <% console.log("more than one movie was found"); %>
-    <% $(manyFound).show(); %>
+
+
+  <% if (dbAndApi.movieList.length === 1) { %>
+    <div id="oneFound">
+      <p> We Found <strong>Movie Name</strong>,</p>
+      <p>a <strong>comedy </strong>released in <strong>1992</strong></p>
+    </div>
+  <% } else if (dbAndApi.movieList.length > 1) { %>
+    <div id="manyFound">
+    <h4>We found multiple results for that title</h4> <br>
+      <form id="manyForm" action="/search/results" method="GET">
+        <% for (i = 0; i < 10; i++) { %>
+            <input id="r1" type="radio" name="title" name="<%= dbAndApi.movieList[i].Title %>" > <strong>Result: <%= dbAndApi.movieList[i].Title %></strong><br>Release Year: <%= dbAndApi.movieList[i].Year %><br>Type: <%= dbAndApi.movieList[i].Type %><br> More Info: <%= dbAndApi.movieList[i].Website %><br>
+          <% } %>
+        <input id="selectFilmButton" class="btn btn-danger" type="submit" value="Select This Film">
+      </form>
+    </div>
   <% } else { %>
-    <% noneFound.show(); %>
+    <div id="noneFound">
+      <p>Sorry, we could not find any movies under that title.</p>
+    </div>
   <% } %>
-<% }); %>
-
-<% $('#selectFilmButton').on('click', function() { %>
-  <% console.log("______ Select This Film was clicked"); %>
-<% }); %>
-<%  %>
-
-
-<div id="oneFound">
-  <p> We Found <strong>Movie Name</strong>,</p>
-  <p>a <strong>comedy </strong>released in <strong>1992</strong></p>
-</div>
-
-
-<div id="manyFound">
-<h4>We found multiple results for that title</h4> <br>
-  <form id="manyForm" action="/search/results" method="GET">
-    <input id="r1" type="radio" name="title" name="Gladiator" > Result: Gladiator, Year: 1992<br>
-    <input id="r2" type="radio" name="title" name="Gremlins" > Result: Gremlins, Year: 1993<br>
-    <input id="r3" type="radio" name="title" name="aj" > Result: aj, Year: 1987<br>
-    <input id="selectFilmButton" class="btn btn-danger" type="submit" value="Select This Film">
-  </form>
-</div>
-
-<br><br>
-
-<div id="noneFound">
-  <p>Sorry, we could not find any movies under that title.</p>
-</div>

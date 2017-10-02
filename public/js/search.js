@@ -30,3 +30,16 @@ var noneFound = $('#noneFound');
   });
 
 </script>
+
+
+<style>
+#oneFound {
+    display: none;
+}
+#manyFound {
+    display: none;
+}
+#noneFound {
+    display: none;
+}
+</style>

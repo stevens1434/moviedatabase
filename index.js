@@ -5,8 +5,6 @@ var bodyParser = require('body-parser');
 var $ = require('jQuery')
 var path = require('path');
 var request = require('request');
-var omdb = require('omdb');
-// var methodOverride = require('method-override');
 // var cookieSession = require('cookie-session');
 var app = express();
 
@@ -15,10 +13,9 @@ var flash = require('connect-flash');
 var isLoggedIn = require('./middleware/isLoggedIn');
 
 app.set('view engine', 'ejs');
-// app.set('trust proxy', 1);
-
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/static', express.static(path.join(__dirname, 'public')))
 app.use(require('morgan')('dev'));
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -61,15 +58,6 @@ var passport = require('./config/ppConfig');
 app.use(passport.initialize());
 app.use(passport.session());
 
-// app.use(methodOverride(function (req, res) {
-//   if (req.body && typeof req.body === 'object' && '_method' in req.body) {
-//     // look in urlencoded POST bodies and delete it
-//     var method = req.body._method;
-//     delete req.body._method;
-//     return method;
-//   }
-// }));
-
 app.get('/', function(req, res) {
   res.render('index');
 })
@@ -99,6 +87,8 @@ app.use('/auth/delete', require('./controllers/auth'));
 // app.use('/search', require('./controllers/movies'));
 app.use('/search', require('./controllers/movies'));
 app.use('/search/results', require('./controllers/movies'));
+// app.use('/search', require('./public/js/search'));
+// app.use('/search/results', require('./public/js/search'));
 
 var server = app.listen(process.env.PORT || 3000);
 

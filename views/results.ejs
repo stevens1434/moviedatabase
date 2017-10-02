@@ -1,6 +1,76 @@
+<style>
+#oneFound {
+    display: none;
+}
+#manyFound {
+    display: none;
+}
+#noneFound {
+    display: none;
+}
+</style>
+
+
 <h1><%= movie.name %></h1>
 
 <a href="/auth/signup">Signup</a>
 <a href="/auth/login">Login</a>
 <a href="/auth/logout">Logout</a>
 <a href="/profile">Profile</a>
+
+<br> <br>
+<input id="grabData" class="btn btn-primary" type="submit" value="Pull IMDB Movie Data">
+<br><br>
+
+
+<div id="oneFound">
+  <p> We Found <strong>Movie Name</strong>,</p>
+  <p>a <strong>comedy </strong>released in <strong>1992</strong></p>
+</div>
+
+
+<div id="manyFound">
+<h4>We found multiple results for that title</h4> <br>
+  <form id="manyForm" action="/search/results" method="GET">
+    <input id="r1" type="radio" name="title" name="Gladiator" > Result: Gladiator, Year: 1992<br>
+    <input id="r2" type="radio" name="title" name="Gremlins" > Result: Gremlins, Year: 1993<br>
+    <input id="r3" type="radio" name="title" name="aj" > Result: aj, Year: 1987<br>
+    <input id="selectFilmButton" class="btn btn-danger" type="submit" value="Select This Film">
+  </form>
+</div>
+
+<br><br>
+
+<div id="noneFound">
+  <p>Sorry, we could not find any movies under that title.</p>
+</div>
+
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+
+<script>
+var length = 3;
+var oneFound = $('#oneFound');
+var manyFound = $('#manyFound');
+var noneFound = $('#noneFound');
+  $('#grabData').on('click', function() {
+    if (length === 1) {
+      console.log("one movie was found");
+      oneFound.show();
+    } else if (length > 1) {
+      console.log("more than one movie was found");
+      $(manyFound).show();
+    } else {
+      console.log("no movies found")
+      noneFound.show();
+    }
+    console.log("______ Pull IMDB Movie Data was clicked");
+  });
+
+  $('#selectFilmButton').on('click', function() {
+    console.log("______ Select This Film was clicked");
+  });
+
+</script>

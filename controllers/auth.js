@@ -2,6 +2,14 @@ var express = require('express');
 var router = express.Router();
 var db = require('../models');
 var passport = require('../config/ppConfig');
+var session = require('express-session');
+var cookieSession = require('cookie-session');
+var methodOverride = require('method-override')
+var path = require('path');
+var bodyParser = require('body-parser');
+var jsonParser = bodyParser.json();
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
+var userId;
 
 router.get('/signup', function(req, res) {
   res.render('auth/signup');
@@ -19,7 +27,7 @@ router.post('/signup', function(req, res) {
     if (created) {
       // replace the contents of this if statement with the code below -- done
       passport.authenticate('local', {
-        successRedirect: '/', //if login successful - redirect to root
+        successRedirect: '/profile', //if login successful - redirect to root
         successFlash: 'Account created and logged in' //FLASH
       })(req, res);
     } else {
@@ -39,7 +47,7 @@ router.get('/login', function(req, res) {
 });
 
 router.post('/login', passport.authenticate('local', {
-  successRedirect: '/search', //if successful w/ login - direct to profile (but I will eventually route to home)
+  successRedirect: '/profile', //if successful w/ login - direct to profile (but I will eventually route to home)
   failureRedirect: '/auth/login', //if not successful w/ login - redirect to login page
   failureFlash: 'Invalid username and/or password', //FLASH
   successFlash: 'You have logged in' //FLASH
@@ -51,32 +59,82 @@ router.get('/logout', function(req, res) {
   res.redirect('/');
 });
 
-
-// router.get('/home', function(req, res) {
-//   res.render('results');
-// });
-
-// router.get('/results', function(req, res) {
-//   db.movies.find();
-//   res.render('results');
-// });
-
-
-// router.get('/results', function(req, res) { // display a specific movie //DO I NEED TO USE JSON?
-//   db.movies.find( {
-//     where: { name: req.body.name }
-//   }).then(function(movie) {
+router.get('/edit', function(req, res) {
+  res.render('auth/edit');
+});
 //
-//     console.log(movie);
-//     res.render('results', { movie: movie });
-//   });
+// router.put('/edit', function(req, res) {
+//   $('.put-form').on('editSubmit', function(e) {
+//     e.preventDefault();
+//     $.ajax({
+//       method: 'PUT',
+//       email: user.email,
+//       name: user.name,
+//       password: user.password
+//     }).done(function(data) {
+//       // get data returned from the PUT route
+//       console.log(data);
+//
+//       //
+//       // do stuff when the PUT action is complete
+//       // teamElement.remove();
+//       //
+//       // or, you can redirect to another page
+//       // window.location = '/profile';
+//       res.redirect('/profile');
+//     });
+//   }); res.redirect('/profile');
 // });
 
-// router.post('/home', function(req, res) {
-//   db.movie.find(
-//   }).then(function(movies){
-//     res.render('results', { movies: movies});
+router.get('/delete', function(req, res) {
+  res.render('auth/delete', {});
+});
+
+router.post('/deleteconfirm', function(req, res) {
+  // console.log(req.user);
+  db.user.destroy({
+    where: {
+      id: req.users
+    }
+  }).then(function() {
+    console.log(req.user.dataValues.UserId);
+    // req.logout();
+    // req.flash('success', 'You have deleted your account.'); //FLASH
+    res.render('auth/deleteconfirm' );
+  });
+
+})
+
+// passport.use(new LocalStrategy({
+//   usernameField: 'email',
+//   passwordField: 'password'
+// }, function(email, password, cb) {
+//   db.user.find({
+//     where: { email: email }
+//   }).then(function(user) {
+//     if (!user || !user.validPassword(password)) {
+//       cb(null, false);
+//     } else {
+//       cb(null, user);
+//     }
+//   }).catch(cb);
+// }));
+// router.post('/auth/delete', function(req, res) {
+//
+//   console.log("_____________________");
+//   db.user.destroy({
+//     where: {
+//       email: req.body.email,
+//       name: req.body.name,
+//       password: req.body.password
+//     }
+//   }).then(function() {
+//     console.log("DELETE ACCOUNT PLEASE");
+//     // req.logout();
+//     req.flash('success', 'You have deleted your account.'); //FLASH
+//     res.render('auth/deleteconfirm');
 //   });
+//
 // });
 
 module.exports = router;

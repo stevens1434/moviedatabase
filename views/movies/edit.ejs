@@ -1,0 +1,29 @@
+<%= movie.name %>
+<form action="/movies/<%= movie.id %>" method="edit-form">
+  <div class="form-group">
+    <label for="editname">Movie Name: </label>
+    <input id="editname" class="editname" type="text" name="editname">
+  </div>
+  <input  class="btn btn-success" value="Edit <%= movie.name %>" id="edit-form" type="editSubmit">
+</form>
+
+
+<form action="/movies/<%= movie.id %>" method="edit-form">
+  <div class="form-group">
+    <label for="editname">Movie Name: </label>
+    <input id="editname" class="editname" type="text" name="editname">
+  </div>
+  <a href="/movies/<%= movie.id %>" class="btn btn-success" value="Edit Account" id="edit-form" type="editSubmit">Edit <%= movie.name %></a>
+</form>
+
+<a href="/auth/login">Login</a>
+<a href="/auth/logout">Logout</a>
+<a href="/profile">Profile</a>
+<a href="/movies">All Movies</a>
+
+
+<script
+  src="https://code.jquery.com/jquery-3.2.1.slim.js"
+  integrity="sha256-tA8y0XqiwnpwmOIl3SGAcFl2RvxHjA8qp0+1uCGmRmg="
+  crossorigin="anonymous"></script>
+<script src="../public/js/edit.js"></script>

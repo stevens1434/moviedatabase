@@ -15,7 +15,6 @@ var isLoggedIn = require('./middleware/isLoggedIn');
 app.set('view engine', 'ejs');
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
-app.use('/static', express.static(path.join(__dirname, 'public')))
 app.use(require('morgan')('dev'));
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -65,7 +64,7 @@ app.get('/', function(req, res) {
 app.get('/search', function(req, res) {
   // db.user.find( { //TRYING TO PASS USER INFO IN
   //   where: { name: req.body.name }
-  // }).then(function(name) {
+  // }).then(function(user) {
     // res.render('search', {user: user});
   // })
   res.render('search');
@@ -76,19 +75,7 @@ app.get('/profile', isLoggedIn, function(req, res) {
 });
 
 app.use('/auth', require('./controllers/auth'));
-app.use('/home', require('./controllers/auth'));
-// app.use('/results', require('./controllers/auth'));
-// app.use('/search/results', require('./controllers/auth'));
-
-app.use('/delete', require('./controllers/auth'));
-app.use('/auth/delete', require('./controllers/auth'));
-
-// app.use('/auth', require('./controllers/movies'));
-// app.use('/search', require('./controllers/movies'));
-app.use('/search', require('./controllers/movies'));
-app.use('/search/results', require('./controllers/movies'));
-// app.use('/search', require('./public/js/search'));
-// app.use('/search/results', require('./public/js/search'));
+app.use('/movies', require('./controllers/movies'));
 
 var server = app.listen(process.env.PORT || 3000);
 

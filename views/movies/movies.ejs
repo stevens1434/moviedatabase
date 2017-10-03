@@ -1,0 +1,6 @@
+These are movies
+<ul>
+<% for (i = 0; i < movie.length; i++) { %>
+  <li><a href="/movies/<%= movie[i].id %>"><%= movie[i].name %></a></li>
+<% } %>
+</ul>

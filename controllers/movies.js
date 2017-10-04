@@ -61,32 +61,37 @@ router.delete('/:id', (req, res) => {
   db.movie.destroy( {
     where: { id: req.params.id }
   }).then(function() {
-    console.log("_________delete in controllers/movies.js")
+    // console.log("_________delete in controllers/movies.js")
     res.redirect('/movies');
   });
 });
 
 router.get('/:id/edit', function(req, res) {
-  db.movie.findOne( {
-    where: { id: req.params.id }
-  }).then(function(movie) {
-    console.log("______movie.name in EDIT", movie.name);
+  db.movie.findOne(
+    { where: { id: req.params.id } }
+  ).then(function(movie) {
+    // console.log("______movie.name in EDIT: ", movie.name);
     res.render('movies/edit', {movie: movie });
   }).catch(function(error) {
     res.status(400).render('main/404'); //ToDO: make 404 page work
   });
 });
-
-router.put('/:id/edit', (req, res) => {
-  db.movie.put( {
-    where: { id: req.body.id }
-  }).then(function() {
-    console.log("_________put(edit) in controllers/movies.js")
-    res.redirect('/:id');
+//ToDo: clean up routes - make edit part of /:id adn do route.put to /:id
+router.put('/:id/:name', function(req, res) {
+  // console.log("______________________ inside PUT /id/name");
+  db.movie.update( {name: req.params.name}, {
+    where: { id: req.params.id }
+  }).then(function(id) {
+    // console.log("_________.then() in put in contr/movies, id: ", id);
+    res.redirect('/search');
+    console.log("_____________REDIRECT: ");
+  }).catch(function(error) {
+    res.status(400).render('main/404'); //ToDO: make 404 page work
   });
 });
 
 
+// $('#edit').parent().attr('action') = $(this).parent().attr('action') + "/" + $('[name=editname]').val(),
 
 
 

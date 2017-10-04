@@ -1,14 +1,20 @@
-$('#put-form').on('submit', function(e) {
-  console.log("________ update button clicked");
+
+
+$('.edit').on('click', function(e) {
+  // console.log("________in AJAX, update button clicked");
   e.preventDefault();
+  action = $(this).parent().attr('action');
+  action = action + "/" + $('[name=editname]').val();
+  // console.log(action);
+  // $('form').attr("action", action)
   $.ajax({
     method: 'PUT',
-    url: $(this).attr('href'),
-    name: name
+    //need to pass the text from "name='editname'" into the URL
+    url: action
   }).done(function(data) {
     // get data returned from the PUT route
-    console.log("___________ done function in PUT(edit) ajax", data);
+    // console.log("___________.done() in AJAX, data: ", data);
     // do stuff when the PUT action is complete
-    movie.name.remove();
+    // movie.name.remove();
   });
 });

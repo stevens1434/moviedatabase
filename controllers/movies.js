@@ -8,6 +8,10 @@ var request = require('request');
 var omdb = require('omdb');
 var $ = require('jQuery');
 
+var session = require('express-session');
+var flash = require('connect-flash');
+var isLoggedIn = require('../middleware/isLoggedIn');
+
 //ToDo:   findAll() - get list of movies
 //        search more than just db.movies (such as db. genere/actors/,etc)
 //        searchOrCreate() - offer to create new movie and somehow add to DB as well as redirect to a page to download the movie torrent
@@ -33,8 +37,11 @@ router.post('/results', function(req, res) {
   });
 });
 
+router.get('/add', isLoggedIn, function(req, res) {
+  res.render('movies/add');
+});
 
-router.get('/', function(req, res) {
+router.get('/', isLoggedIn, function(req, res) {
   db.movie.findAll( {
     order: [["name", "ASC"]]
   }).then(function(movie) {
@@ -45,7 +52,7 @@ router.get('/', function(req, res) {
   });
 });
 
-router.get('/:id', function(req, res) {
+router.get('/:id', isLoggedIn, function(req, res) {
   db.movie.find( {
     where: { id: req.params.id }
   }).then(function(movie) {
@@ -57,7 +64,7 @@ router.get('/:id', function(req, res) {
 });
 
 //ToDo: make this redirect to a real page
-router.delete('/:id', (req, res) => {
+router.delete('/:id', isLoggedIn, function(req, res) {
   db.movie.destroy( {
     where: { id: req.params.id }
   }).then(function() {
@@ -66,33 +73,55 @@ router.delete('/:id', (req, res) => {
   });
 });
 
-router.get('/:id/edit', function(req, res) {
-  db.movie.findOne(
-    { where: { id: req.params.id } }
-  ).then(function(movie) {
-    // console.log("______movie.name in EDIT: ", movie.name);
-    res.render('movies/edit', {movie: movie });
-  }).catch(function(error) {
-    res.status(400).render('main/404'); //ToDO: make 404 page work
-  });
-});
+// router.get('/:id/edit', function(req, res) {
+//   db.movie.findOne(
+//     { where: { id: req.params.id } }
+//   ).then(function(movie) {
+//     // console.log("______movie.name in EDIT: ", movie.name);
+//     res.render('movies/edit', {movie: movie });
+//   }).catch(function(error) {
+//     res.status(400).render('main/404'); //ToDO: make 404 page work
+//   });
+// });
 //ToDo: clean up routes - make edit part of /:id adn do route.put to /:id
 router.put('/:id/:name', function(req, res) {
-  // console.log("______________________ inside PUT /id/name");
-  db.movie.update( {name: req.params.name}, {
-    where: { id: req.params.id }
+  db.movie.update(
+    { name: req.params.name },
+    { where: { id: req.params.id }
   }).then(function(id) {
-    // console.log("_________.then() in put in contr/movies, id: ", id);
-    res.redirect('/search');
-    console.log("_____________REDIRECT: ");
+    console.log("_________.then() in put in contr/movies, id: ", id);
+    res.render('movies', {movie: movie });
+    // console.log("_____________REDIRECT: ");
   }).catch(function(error) {
     res.status(400).render('main/404'); //ToDO: make 404 page work
   });
 });
 
-
-// $('#edit').parent().attr('action') = $(this).parent().attr('action') + "/" + $('[name=editname]').val(),
-
+// router.post('/', isLoggedIn, function(req, res) {
+//   console.log("__________add movie to database", req.body.name);
+//   db.movie.findOrCreate({
+//     name: req.body.name
+//   }).spread(function(user, created) {
+//     if (created) {
+//         res.redirect('/movies');
+//     } else {
+//       // if not created, the email already exists
+//       req.flash('error', 'movie already exists');  //FLASH
+//       res.redirect('/movies/add');
+//     }
+//   }).catch(function(error) {
+//     // FLASH
+//     req.flash('error', error.message);
+//     res.redirect('/auth/signup');
+//   });
+// });
+router.post('/', isLoggedIn, function(req, res) {
+  db.movie.create({
+    name: req.body.name
+  }).then(function(data) {
+    res.redirect('/movies');
+  });
+});
 
 
 module.exports = router;

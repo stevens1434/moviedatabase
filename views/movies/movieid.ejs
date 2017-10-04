@@ -1,21 +1,36 @@
+<link rel="stylesheet" type="text/css" href="../public/css/style.css" />
+
 <%= movie.name %>
 
 <br>
 <br>
 
-<a href="/movies/<%= movie.id %>" id="delete-link" class='btn btn-danger delete-link'>Delete <%= movie.name %></a>
-
-<a href="/movies/<%= movie.id %>/edit" class='btn btn-success'>Edit <%= movie.name %></a>
-<br>
-<br>
-<a href="/auth/login">Login</a>
+<a href="/">Home</a>
 <a href="/auth/logout">Logout</a>
 <a href="/profile">Profile</a>
+<a href="/search">Search</a>
 <a href="/movies">All Movies</a>
+<a href="/movies/add">Add Movie</a>
+<br>
+<br>
+<h4> Edit and Delete Movie </h4>
+<br>
+<form id="form" action="/movies/<%= movie.id %>" method="POST">
+  <div class="form-group">
+
+    <input id="editname" class="editname" type="text" name="editname">
+    <input class="btn btn-success edit" value="Edit <%= movie.name %>" id="edit" type="Submit">
+  </div>
+</form>
+<br>
+<a href="/movies/<%= movie.id %>" id="delete-link" class='btn btn-danger delete-link'>Delete <%= movie.name %></a>
+
 
 <script
   src="https://code.jquery.com/jquery-3.2.1.slim.js"
   integrity="sha256-tA8y0XqiwnpwmOIl3SGAcFl2RvxHjA8qp0+1uCGmRmg="
   crossorigin="anonymous"></script>
-  
+
+<script>var action = $('#form').attr('action');</script>
+
 <script src="../public/js/movies.js"></script>

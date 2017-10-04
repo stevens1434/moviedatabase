@@ -3,13 +3,15 @@ var router = express.Router();
 var db = require('../models');
 var passport = require('../config/ppConfig');
 var session = require('express-session');
-var cookieSession = require('cookie-session');
-var methodOverride = require('method-override')
+// var cookieSession = require('cookie-session');
+// var methodOverride = require('method-override')
 var path = require('path');
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var userId;
+var flash = require('connect-flash');
+var isLoggedIn = require('../middleware/isLoggedIn');
 
 router.get('/signup', function(req, res) {
   res.render('auth/signup');
@@ -59,7 +61,7 @@ router.get('/logout', function(req, res) {
   res.redirect('/');
 });
 
-router.get('/edit', function(req, res) {
+router.get('/edit', isLoggedIn, function(req, res) {
   res.render('auth/edit');
 });
 //

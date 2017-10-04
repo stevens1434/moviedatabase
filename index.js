@@ -39,7 +39,6 @@ app.use(session({
   saveUninitialized: true
 }));
 
-
  // * Include the flash module by calling it within app.use().
  // * IMPORTANT: This MUST go after the session module
 app.use(flash());
@@ -61,7 +60,7 @@ app.get('/', function(req, res) {
   res.render('index');
 })
 
-app.get('/search', function(req, res) {
+app.get('/search', isLoggedIn, function(req, res) {
   // db.user.find( { //TRYING TO PASS USER INFO IN
   //   where: { name: req.body.name }
   // }).then(function(user) {

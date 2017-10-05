@@ -17,18 +17,24 @@ var isLoggedIn = require('../middleware/isLoggedIn');
 //        searchOrCreate() - offer to create new movie and somehow add to DB as well as redirect to a page to download the movie torrent
 // Search doing "like", google: "how to do like in sequelize"
 
+// var api = require(../../.env);
+//
+// process.env.SESSION_SECRET
+// console.log("______ api key: ",process.env.API_KEY);
 var dbAndApi = {};
-var ids = [];
-router.post('/results', function(req, res) {
+var ids = []; //might be able to use this to grab specific imdbID from resluts view                                          //2fb112ab
+router.post('/results', function(req, res) {          //process.env.API_KEY
   request('http://www.omdbapi.com/?s=' + req.body.name + '&apikey=2fb112ab', function(error, response, body) {
     var data = JSON.parse(body);
     var movieList = data.Search;
     dbAndApi.movieList = movieList;
+    // console.log("______ movieList", movieList);
+    // console.log("______ dbAndApi.movieList",dbAndApi.movieList);
     for (var i = 0; i < 6; i++) {
       ids.push(movieList[i].imdbID);
     };
-    console.log("______ ids: ", ids);
-    console.log("_______ IMDB ID: ", dbAndApi.movieList[0].imdbID);
+    // console.log("______ ids: ", ids);
+    // console.log("_______ IMDB ID: ", dbAndApi.movieList[0].imdbID);
       request('https://theimdbapi.org/api/movie?movie_id=' + dbAndApi.movieList[0].imdbID, function(error, response, body) {
         var imdbID = JSON.parse(body);
         dbAndApi.imdbID = imdbID;

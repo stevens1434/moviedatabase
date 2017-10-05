@@ -75,7 +75,7 @@ app.get('/profile', isLoggedIn, function(req, res) {
   //   where: { id: req.params.id }
   // }).then(function(user) {
   //   // console.log("______movie", movie);
-  res.render('profile'), {user: user};
+  res.render('profile');
 // });
 });
 

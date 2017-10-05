@@ -1,20 +1,19 @@
-//NOT USEFUL WITH THE METHOD-OVERRIDE INSTALLED
-// 
-// $(document).ready(function() {
-//   console.log("script.js file");
-//   $('.delete').on('click', function(e) {
-//     e.preventDefault();
-//     //may want to grab data about user model/database
-//     $.ajax({
-//       method: 'DELETE',
-//       url: '/auth/delete/:id', //need to have :id to delete movie
-//       email: email,
-//       name: name,
-//       password: password
-//     }).done(function(data) {
-//       console.log("SCRIPT.JS AJAX SHIT" + data);
-//     })
-//   });
+var imageArr = [
+     '../../../public/img/images/DeathStar.jpg',
+     '../public/img/images/Joker.jpg',
+     '../../../img/images/Leo.jpg',
+     '../../../img/images/Lincoln.jpg',
+     '../../../img/images/Nature.jpg'
+  ]
+
 //
-//
-// });
+// window.onload = function() {
+// // var backgroundImage = function () {
+// console.log('_____window.onload');
+// console.log('_____imageArr', imageArr[0]);
+//   for (var i = 0; i < imageArr.length; i++) {
+//     console.log(imageArr[0]);
+//       // var images = getRandomItem(imageArr);
+//       $('body').style.backgroundImage = 'url(imageArr[1])';
+//   }
+// }

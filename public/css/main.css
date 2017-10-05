@@ -1,0 +1,26 @@
+body {
+  background-image: url('../../../public/img/images/DeathStar.jpg');
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+  height: 1080px;
+  width: 100%;
+}
+
+.navbar {
+  width: 100%;
+}
+
+#homehead {
+  position: relative;
+  top: 50px;
+}
+#header {
+  font-size: 80px;
+}
+.col-sm-3 {
+  color: white;
+}
+#subhead {
+  color: lightblue;
+}

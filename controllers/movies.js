@@ -23,19 +23,26 @@ router.post('/results', function(req, res) {
     var data = JSON.parse(body);
     var movieList = data.Search;
     dbAndApi.movieList = movieList;
-    db.movie.findOne( {
-      where: { name: req.body.name }
-      // order: [["name", "ASC"]]
-    }).then(function(movie) {
-      // console.log("______dbAndApi", dbAndApi.movieList);
-      dbAndApi.movie = movie;
-      res.render('movies/results', {dbAndApi: dbAndApi });
-    }).catch(function(error) {
-      // console.log('_________________________________________', res.status);
-      res.status(400).render('main/404'); //ToDO: make 404 page work
-    });
+    // console.log("_______ IMDB ID: ", dbAndApi.movieList[0].imdbID);
+      request('https://theimdbapi.org/api/movie?movie_id=' + dbAndApi.movieList[0].imdbID, function(error, response, body) {
+        var imdbID = JSON.parse(body);
+        dbAndApi.imdbID = imdbID;
+        // console.log("____________ imdbID: ", dbAndApi.imdbID);
+        db.movie.findOne( {
+          where: { name: req.body.name }
+          // order: [["name", "ASC"]]
+        }).then(function(movie) {
+          // console.log("______dbAndApi actor", dbAndApi.imdbID.stars[0]);
+          dbAndApi.movie = movie;
+          res.render('movies/results', {dbAndApi: dbAndApi });
+        }).catch(function(error) {
+          // console.log('_________________________________________', res.status);
+          res.status(400).render('main/404'); //ToDO: make 404 page work
+        });
+      });
   });
 });
+
 
 router.get('/add', isLoggedIn, function(req, res) {
   res.render('movies/add');

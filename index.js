@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var $ = require('jQuery')
 var path = require('path');
 var request = require('request');
+var db = require('./models');
 // var cookieSession = require('cookie-session');
 var app = express();
 
@@ -70,11 +71,12 @@ app.get('/search', isLoggedIn, function(req, res) {
 })
 
 app.get('/profile', isLoggedIn, function(req, res) {
-  // db.user.find( {
-  //   where: { id: req.params.id }
-  // }).then(function(movie) {
-  //   // console.log("______movie", movie);
-  res.render('profile');
+  db.user.find( {
+    where: { id: req.params.id }
+  }).then(function(user) {
+    // console.log("______movie", movie);
+  res.render('profile'), {user: user};
+});
 });
 
 app.use('/auth', require('./controllers/auth'));

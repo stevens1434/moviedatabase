@@ -71,12 +71,12 @@ app.get('/search', isLoggedIn, function(req, res) {
 })
 
 app.get('/profile', isLoggedIn, function(req, res) {
-  db.user.find( {
-    where: { id: req.params.id }
-  }).then(function(user) {
-    // console.log("______movie", movie);
+  // db.user.find( {
+  //   where: { id: req.params.id }
+  // }).then(function(user) {
+  //   // console.log("______movie", movie);
   res.render('profile'), {user: user};
-});
+// });
 });
 
 app.use('/auth', require('./controllers/auth'));

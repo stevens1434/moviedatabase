@@ -45,7 +45,8 @@
     "pg-search-sequelize": "0.0.10",
     "request": "^2.83.0",
     "rowdy-logger": "^1.0.0",
-    "sequelize": "^3.30.4"
+    "sequelize": "^3.30.4",
+    "sequelize-cli": "^3.0.0"
   },
   "description": "Express authentication template using Passport + flash messages + custom middleware",
   "directories": {

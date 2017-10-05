@@ -70,6 +70,10 @@ app.get('/search', isLoggedIn, function(req, res) {
 })
 
 app.get('/profile', isLoggedIn, function(req, res) {
+  // db.user.find( {
+  //   where: { id: req.params.id }
+  // }).then(function(movie) {
+  //   // console.log("______movie", movie);
   res.render('profile');
 });
 

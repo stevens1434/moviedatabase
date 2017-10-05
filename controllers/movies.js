@@ -18,12 +18,17 @@ var isLoggedIn = require('../middleware/isLoggedIn');
 // Search doing "like", google: "how to do like in sequelize"
 
 var dbAndApi = {};
+var ids = [];
 router.post('/results', function(req, res) {
   request('http://www.omdbapi.com/?s=' + req.body.name + '&apikey=2fb112ab', function(error, response, body) {
     var data = JSON.parse(body);
     var movieList = data.Search;
     dbAndApi.movieList = movieList;
-    // console.log("_______ IMDB ID: ", dbAndApi.movieList[0].imdbID);
+    for (var i = 0; i < 6; i++) {
+      ids.push(movieList[i].imdbID);
+    };
+    console.log("______ ids: ", ids);
+    console.log("_______ IMDB ID: ", dbAndApi.movieList[0].imdbID);
       request('https://theimdbapi.org/api/movie?movie_id=' + dbAndApi.movieList[0].imdbID, function(error, response, body) {
         var imdbID = JSON.parse(body);
         dbAndApi.imdbID = imdbID;

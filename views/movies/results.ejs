@@ -1,15 +1,13 @@
 <link rel="stylesheet" type="text/css" href="../public/css/style.css" />
 
 
-<h1><%= dbAndApi.movie.name %></h1>
+<h1 class="h1head"><%= dbAndApi.movie.name %></h1>
 
 
-<a href="/">Home</a>
-<a href="/search">Search</a>
+<a href="/">Home</a> |
+<a href="/search">Search</a> |
 <a href="/movies">All Movies</a>
 <br><br>
-
-<h3>Movie Name: <strong><%= dbAndApi.movieList.Title %></strong></h3>
 
 
 <script
@@ -26,7 +24,7 @@
 
   <% for (var i = 0; i < 6; i++) { %>
     <div id="manyFound">
-    <h4>We found multiple results for that title</h4> <br>
+    <h4>We found multiple results for that title:</h4> <br>
       <form id="manyForm" action="/search/results" method="GET">
         <% for (i = i; i < 6; i++) { %>
           <div id="fh5co-main">
@@ -39,6 +37,7 @@
                     </div>
                       <div class="fh5co-desc">
                         <div id="subtitle"><strong><%= dbAndApi.imdbResults[i].title %></strong></div>
+                        <div id="describe"><br><%= dbAndApi.imdbResults[i].description %></div>
                         <br>Release Year: <%= dbAndApi.imdbResults[i].year %>
                         <br>Type: <%= dbAndApi.movieList[i].Type %><br>
                         <% for (var j = 0; j < 2; j++) { %>
@@ -51,7 +50,6 @@
                         <% } %>
                         <br>Rating: <%= dbAndApi.imdbResults[i].content_rating %>
                         <br>Website: <%= dbAndApi.imdbResults[i].url %>
-                        <br>Story: <%= dbAndApi.imdbResults[i].description %>
                     </div>
                   </div>
                 </div>

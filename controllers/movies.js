@@ -22,23 +22,66 @@ var isLoggedIn = require('../middleware/isLoggedIn');
 // process.env.SESSION_SECRET
 // console.log("______ api key: ",process.env.API_KEY);
 var dbAndApi = {};
-var ids = []; //might be able to use this to grab specific imdbID from resluts view                                          //2fb112ab
+var imdbResults = [];                                  //2fb112ab
+  var ids = [];
+
+var iterateThroughMovies = function(callback){
+  // console.log("iterateThroughMovies ___________");
+  for (var j = 0; j < 6; j++) {
+    // imdbResults.push(getMovieDetails(j));
+    getMovieDetails(j, function(data){
+      // console.log("__________ data: ", data);
+      imdbResults.push(data)
+    })
+
+      callback(imdbResults)
+
+  };
+// console.log("______ imdbResults: ", imdbResults);
+}
+
+var getMovieDetails = function(j, callback){
+  console.log("getMovieDetails_______________")
+    request('https://theimdbapi.org/api/movie?movie_id=' + ids[j], function(error, response, body) {
+      var imdbDetails = JSON.parse(body);
+      // console.log("_________imdbDetails: ", imdbDetails);
+      // imdbResults.push(imdbDetails);
+      // console.log("____________ imdbID: ", dbAndApi.imdbID);
+      callback(imdbDetails)
+    });
+}
+
 router.post('/results', function(req, res) {          //process.env.API_KEY
   request('http://www.omdbapi.com/?s=' + req.body.name + '&apikey=2fb112ab', function(error, response, body) {
     var data = JSON.parse(body);
     var movieList = data.Search;
     dbAndApi.movieList = movieList;
-    // console.log("______ movieList", movieList);
-    // console.log("______ dbAndApi.movieList",dbAndApi.movieList);
+                // console.log("______ movieList", movieList);
+                // console.log("______ dbAndApi w/ movieList: ",dbAndApi);
     for (var i = 0; i < 6; i++) {
       ids.push(movieList[i].imdbID);
     };
-    // console.log("______ ids: ", ids);
-    // console.log("_______ IMDB ID: ", dbAndApi.movieList[0].imdbID);
-      request('https://theimdbapi.org/api/movie?movie_id=' + dbAndApi.movieList[0].imdbID, function(error, response, body) {
-        var imdbID = JSON.parse(body);
-        dbAndApi.imdbID = imdbID;
-        // console.log("____________ imdbID: ", dbAndApi.imdbID);
+                // console.log("______ ids: ", ids);
+                // console.log("_______ IMDB ID: ", dbAndApi.movieList[0].imdbID);
+    // var imdbResults = [];
+    iterateThroughMovies( function(x) {
+      // console.log("iterateThroughMovies 1 __________")
+      // console.log("______________imdbmovieresults");
+      dbAndApi.imdbResults = imdbResults
+    })
+    // for (var j = 0; j < 6; j++) {
+    //   imdbResults.push(getMovieDetails(j));
+    //   // request('https://theimdbapi.org/api/movie?movie_id=' + ids[j], function(error, response, body) {
+    //   //   var imdbDetails = JSON.parse(body);
+    //   //   console.log(imdbDetails);
+    //   //   imdbResults.push(imdbDetails);
+    //   //   // console.log("____________ imdbID: ", dbAndApi.imdbID);
+    //   // })
+    // };
+    // console.log("_____imdbResults pushing all imdb data into array: ", imdbResults);
+
+// console.log("______ dbAndApi w/ movieList and imdbResults: ",dbAndApi);
+
         db.movie.findOne( {
           where: { name: req.body.name }
           // order: [["name", "ASC"]]
@@ -47,13 +90,23 @@ router.post('/results', function(req, res) {          //process.env.API_KEY
           dbAndApi.movie = movie;
           res.render('movies/results', {dbAndApi: dbAndApi });
         }).catch(function(error) {
-          // console.log('_________________________________________', res.status);
           res.status(400).render('main/404'); //ToDO: make 404 page work
         });
       });
-  });
-});
+    });
 
+
+
+
+
+
+
+
+
+
+
+
+// imdbResults --> dbAndApi after filling up imdbResults with 6 objects of data
 
 router.get('/add', isLoggedIn, function(req, res) {
   res.render('movies/add');

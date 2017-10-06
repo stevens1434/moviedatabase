@@ -5,11 +5,8 @@
 
 
 <a href="/">Home</a>
-<a href="/auth/logout">Logout</a>
-<a href="/profile">Profile</a>
 <a href="/search">Search</a>
 <a href="/movies">All Movies</a>
-<a href="/movies/add">Add Movie</a>
 <br><br>
 
 <h3>Movie Name: <strong><%= dbAndApi.movieList[0].Title %></strong></h3>
@@ -24,51 +21,4 @@
 
 
 
-  <% if (dbAndApi.movieList.length === 1) { %>
-    <div id="oneFound">
-      <p> We Found <strong>Movie Name</strong>,</p>
-      <p>a <strong>comedy </strong>released in <strong>1992</strong></p>
-    </div>
-  <% } else if (dbAndApi.movieList.length > 1) { %>
-    <div id="manyFound">
-    <h4>We found multiple results for that title</h4> <br>
-      <form id="manyForm" action="/search/results" method="GET">
-        <% for (i = 0; i < 6; i++) { %>
-          <div id="fh5co-main">
-        	  <div class="container">
-        			<div class="row">
-                <div id="fh5co-board" data-columns>
-                  <div class="item">
-                		<div class="animate-box">
-        	        		<a href="<%= dbAndApi.imdbID.poster.thumb %>" class="image-popup fh5co-board-img" title="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, eos?"><img src="<%= dbAndApi.imdbID.poster.thumb %>" alt="IMAGE GOES HERE"></a>
-                		</div>
-                  		<div class="fh5co-desc">
-                        <br>Release Year: <%= dbAndApi.movieList[i].Year %>
-                        <br>Type: <%= dbAndApi.movieList[i].Type %>
-                        <% for (var j = 0; j < 2; j++) { %>
-                          <br>Genre: <%= dbAndApi.imdbID.genre[j] %>
-                        <% } %>
-                        <br>Score: <%= dbAndApi.imdbID.rating %>
-                        <% for (var k = 0; k < 3; k++) { %>
-                          <br>Actors: <%= dbAndApi.imdbID.stars[k] %>
-                        <% } %>
-                        <br>Rating: <%= dbAndApi.imdbID.content_rating %>
-                        <br>Website: <%= dbAndApi.imdbID.url %>
-                        <br>Trailer: <%= dbAndApi.imdbID.trailer[0].videoUrl %>
-                        <br>Story: <%= dbAndApi.imdbID.description %>
-                    </div>
-                	</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        <% } %>
-          <br>
-        <input id="selectFilmButton" class="btn btn-danger" type="submit" value="Select This Film">
-      </form>
-    </div>
-  <% } else { %>
-    <div id="noneFound">
-      <p>Sorry, we could not find any movies under that title.</p>
-    </div>
-  <% } %>
+  <%= dbAndApi.imdbResults[0].title %>

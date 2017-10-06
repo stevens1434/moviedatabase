@@ -37,11 +37,11 @@ var iterateThroughMovies = function(callback){
       callback(imdbResults)
 
   };
-// console.log("______ imdbResults: ", imdbResults);
+// console.log("______ imdbResults: ", imdbResults[1].poster);
 }
 
 var getMovieDetails = function(j, callback){
-  console.log("getMovieDetails_______________")
+  // console.log("getMovieDetails_______________")
     request('https://theimdbapi.org/api/movie?movie_id=' + ids[j], function(error, response, body) {
       var imdbDetails = JSON.parse(body);
       // console.log("_________imdbDetails: ", imdbDetails);
@@ -56,32 +56,13 @@ router.post('/results', function(req, res) {          //process.env.API_KEY
     var data = JSON.parse(body);
     var movieList = data.Search;
     dbAndApi.movieList = movieList;
-                // console.log("______ movieList", movieList);
-                // console.log("______ dbAndApi w/ movieList: ",dbAndApi);
     for (var i = 0; i < 6; i++) {
       ids.push(movieList[i].imdbID);
     };
-                // console.log("______ ids: ", ids);
-                // console.log("_______ IMDB ID: ", dbAndApi.movieList[0].imdbID);
-    // var imdbResults = [];
     iterateThroughMovies( function(x) {
-      // console.log("iterateThroughMovies 1 __________")
-      // console.log("______________imdbmovieresults");
+
       dbAndApi.imdbResults = imdbResults
     })
-    // for (var j = 0; j < 6; j++) {
-    //   imdbResults.push(getMovieDetails(j));
-    //   // request('https://theimdbapi.org/api/movie?movie_id=' + ids[j], function(error, response, body) {
-    //   //   var imdbDetails = JSON.parse(body);
-    //   //   console.log(imdbDetails);
-    //   //   imdbResults.push(imdbDetails);
-    //   //   // console.log("____________ imdbID: ", dbAndApi.imdbID);
-    //   // })
-    // };
-    // console.log("_____imdbResults pushing all imdb data into array: ", imdbResults);
-
-// console.log("______ dbAndApi w/ movieList and imdbResults: ",dbAndApi);
-
         db.movie.findOne( {
           where: { name: req.body.name }
           // order: [["name", "ASC"]]
@@ -95,18 +76,6 @@ router.post('/results', function(req, res) {          //process.env.API_KEY
       });
     });
 
-
-
-
-
-
-
-
-
-
-
-
-// imdbResults --> dbAndApi after filling up imdbResults with 6 objects of data
 
 router.get('/add', isLoggedIn, function(req, res) {
   res.render('movies/add');

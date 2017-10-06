@@ -1913,6 +1913,7 @@ pre code {
 .row {
   margin-left: -20px;
   margin-right: -20px;
+  width: 321px;
 }
 .row:before, .row:after {
   content: " ";
@@ -7609,6 +7610,17 @@ h1, h2, h3, h4, h5, h6 {
 
 #fh5co-main {
   padding-top: 5em;
+  width: 321px;
+  display: inline-block;
+
+}
+
+.subtitle {
+  color: darkgrey;
+  font-size: 25px;
+}
+.describe {
+  color: grey;
 }
 
 #fh5co-board .item {
@@ -7630,6 +7642,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 20px;
   float: left;
   line-height: 24px;
+  min-height: 500px;
 }
 #fh5co-board .item .fh5co-item-title {
   font-family: "Montserrat", arial, sans-serif;
@@ -7648,6 +7661,8 @@ h1, h2, h3, h4, h5, h6 {
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   overflow: hidden;
+  width: 320px;
+  height: 475px;
 }
 #fh5co-board .item .image-popup:hover img {
   opacity: .5;
@@ -7655,6 +7670,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .js .animate-box {
   opacity: 0;
+  width: 321px;
 }
 
 pre {

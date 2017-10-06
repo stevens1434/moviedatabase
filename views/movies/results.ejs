@@ -9,7 +9,7 @@
 <a href="/movies">All Movies</a>
 <br><br>
 
-<h3>Movie Name: <strong><%= dbAndApi.movieList[0].Title %></strong></h3>
+<h3>Movie Name: <strong><%= dbAndApi.movieList.Title %></strong></h3>
 
 
 <script
@@ -21,4 +21,47 @@
 
 
 
-  <%= dbAndApi.imdbResults[0].title %>
+
+
+
+  <% for (var i = 0; i < 6; i++) { %>
+    <div id="manyFound">
+    <h4>We found multiple results for that title</h4> <br>
+      <form id="manyForm" action="/search/results" method="GET">
+        <% for (i = i; i < 6; i++) { %>
+          <div id="fh5co-main">
+            <div class="container">
+              <div class="row">
+                <div id="fh5co-board" data-columns>
+                  <div class="item">
+                    <div class="animate-box">
+                        <a href="<%= dbAndApi.imdbResults[i].poster.large %>" class="image-popup fh5co-board-img" title="Photo"><img src="<%= dbAndApi.imdbResults[i].poster.large %>" alt="IMAGE GOES HERE"></a>
+                    </div>
+                      <div class="fh5co-desc">
+                        <div id="subtitle"><strong><%= dbAndApi.imdbResults[i].title %></strong></div>
+                        <br>Release Year: <%= dbAndApi.imdbResults[i].year %>
+                        <br>Type: <%= dbAndApi.movieList[i].Type %><br>
+                        <% for (var j = 0; j < 2; j++) { %>
+                          <%= dbAndApi.imdbResults[i].genre[j] %>
+                        <% } %>
+                        <br>Score: <%= dbAndApi.imdbResults[i].rating %>
+                        <br>Actors:
+                        <% for (var k = 0; k < 3; k++) { %>
+                          <br><%= dbAndApi.imdbResults[i].stars[k] %>
+                        <% } %>
+                        <br>Rating: <%= dbAndApi.imdbResults[i].content_rating %>
+                        <br>Website: <%= dbAndApi.imdbResults[i].url %>
+                        <br>Story: <%= dbAndApi.imdbResults[i].description %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% } %>
+          <br>
+        <input id="selectFilmButton" class="btn btn-danger" type="submit" value="Select This Film">
+      </form>
+    </div>
+
+  <% } %>

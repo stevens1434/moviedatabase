@@ -7,75 +7,216 @@ var passport = require('../config/ppConfig');
 var request = require('request');
 var omdb = require('omdb');
 var $ = require('jQuery');
-
 var session = require('express-session');
 var flash = require('connect-flash');
 var isLoggedIn = require('../middleware/isLoggedIn');
+var async = require('async');
 
-//ToDo:   findAll() - get list of movies
-//        search more than just db.movies (such as db. genere/actors/,etc)
-//        searchOrCreate() - offer to create new movie and somehow add to DB as well as redirect to a page to download the movie torrent
-// Search doing "like", google: "how to do like in sequelize"
 
-// var api = require(../../.env);
-//
-// process.env.SESSION_SECRET
-// console.log("______ api key: ",process.env.API_KEY);
 var dbAndApi = {};
-var imdbResults = [];                                  //2fb112ab
-  var ids = [];
+var imdbResults = [];
+var imdbPoster = [];
+var ids = [];
+
+var getPosters = function(callback) {
+  imdbPoster.push(imdbResults[1].poster.large);
+}
 
 var iterateThroughMovies = function(callback){
-  // console.log("iterateThroughMovies ___________");
   for (var j = 0; j < 6; j++) {
-    // imdbResults.push(getMovieDetails(j));
     getMovieDetails(j, function(data){
-      // console.log("__________ data: ", data);
-      imdbResults.push(data)
-    })
-
-      callback(imdbResults)
-
+    imdbResults.push(data);
+  })
+    callback(imdbResults);
   };
-// console.log("______ imdbResults: ", imdbResults[1].poster);
 }
 
 var getMovieDetails = function(j, callback){
-  // console.log("getMovieDetails_______________")
     request('https://theimdbapi.org/api/movie?movie_id=' + ids[j], function(error, response, body) {
       var imdbDetails = JSON.parse(body);
-      // console.log("_________imdbDetails: ", imdbDetails);
-      // imdbResults.push(imdbDetails);
-      // console.log("____________ imdbID: ", dbAndApi.imdbID);
-      callback(imdbDetails)
+      callback(imdbDetails);
     });
 }
-
-router.post('/results', function(req, res) {          //process.env.API_KEY
-  request('http://www.omdbapi.com/?s=' + req.body.name + '&apikey=2fb112ab', function(error, response, body) {
-    var data = JSON.parse(body);
-    var movieList = data.Search;
-    dbAndApi.movieList = movieList;
-    for (var i = 0; i < 6; i++) {
-      ids.push(movieList[i].imdbID);
-    };
-    iterateThroughMovies( function(x) {
-
-      dbAndApi.imdbResults = imdbResults
-    })
-        db.movie.findOne( {
-          where: { name: req.body.name }
-          // order: [["name", "ASC"]]
-        }).then(function(movie) {
-          // console.log("______dbAndApi actor", dbAndApi.imdbID.stars[0]);
-          dbAndApi.movie = movie;
-          res.render('movies/results', {dbAndApi: dbAndApi });
-        }).catch(function(error) {
-          res.status(400).render('main/404'); //ToDO: make 404 page work
-        });
+router.post('/results', function(req, res) {
+    var ombdData = function(callback) {
+      request('http://www.omdbapi.com/?s=' + req.body.name + '&apikey=2fb112ab', function(error, response, body) {
+        var data = JSON.parse(body);
+        var movieList = data.Search;
+        for (var i = 0; i < 6; i++) {
+          ids.push(movieList[i].imdbID); // add OMDB movie ID's to ids array
+        }
+        var omdbFinal = callback;
+        dbAndApi.omdbFinal = omdbFinal;
+        callback(null, movieList);
       });
+    }
+    var imdbData = function(callback) {
+      iterateThroughMovies(function(x) {
+        // iterate(imdbResults); //might need to set up an outside var arr = {}; to push to and then callback
+      });
+      callback(null, imdbResults);
+      // console.log("__________imdbResults: ", imdbResults);
+    }
+    var dbData = function(callback) {
+      db.movie.findOne( {
+        where: { name: req.body.name }
+      }).then(function(movie) {
+        var dbFinal = callback;
+        dbAndApi.dbFinal = dbFinal;
+        callback(null, movie);
+      });
+    }
+    async.series([ombdData, imdbData, dbData], function(err, results) {
+      // dbAndApi.results = results;
+      // console.log("__________results: ", results);
+      // console.log("______dbAndApi in .series: ", dbAndApi);
+      // console.log("______imdbResults: ", imdbResults);
+      // console.log("++_____________++ dbAndApi.ombdFinal: ", dbAndApi.omdbFinal);
+      // console.log("++_____________++ dbAndApi.imdbFinal: ", dbAndApi.imdbFinal);
+      getPosters(imdbResults);
+      console.log("______ imdbPoster: ", imdbPoster);
+      res.render('movies/results', {results: results});
     });
+})
 
+// router.post('/results', function(req, res) {          //process.env.API_KEY
+//   request('http://www.omdbapi.com/?s=' + req.body.name + '&apikey=2fb112ab', function(error, response, body) {
+//     var data = JSON.parse(body);
+//     var movieList = data.Search;
+//     dbAndApi.movieList = movieList;
+//     for (var i = 0; i < 6; i++) {
+//       ids.push(movieList[i].imdbID);
+//     };
+//     iterateThroughMovies( function(x) {
+//     dbAndApi.imdbResults = imdbResults //callback(imdbResults____________)
+//     })
+//         db.movie.findOne( {
+//           where: { name: req.body.name }
+//         }).then(function(movie) {
+//           // console.log("______dbAndApi actor", dbAndApi.imdbID.stars[0]);
+//           dbAndApi.movie = movie;
+//           res.render('movies/results', {dbAndApi: dbAndApi });
+//         }).catch(function(error) {
+//           res.status(400).render('main/404'); //ToDO: make 404 page work
+//         });
+//       });
+//     });
+// var api = require(../../.env);
+// process.env.SESSION_SECRET
+                    // var dbAndApi = {};
+                    // var imdbResults = [];
+                    // var ids = [];
+                    // //
+                    // var iterateThroughMovies = function(callback){
+                    //   for (var j = 0; j < 6; j++) {
+                    //     getMovieDetails(j, function(data){ // go down one line to run getMovieDetails()
+                    //       imdbResults.push(data); //THIS IS PUSHING SOME DATA BUT only after a refresh and IT SEEMS TO BE ONLY TAKING ONE OF 6 OPTIONS... WHY?? ASYNC.SERIES FOR EVERYTHING PRIOR?
+                    //       // console.log("_____data in iteratetroughmovies: ", data);
+                    //     })
+                    //       callback(imdbResults)
+                    //       // console.log("imdbResults____________: ", imdbResults);
+                    //   };
+                    // }
+                    // var getMovieDetails = function(j, callback){
+                    //     request('https://theimdbapi.org/api/movie?movie_id=' + ids[j], function(error, response, body) {
+                    //       var imdbDetails = JSON.parse(body);
+                    //       // console.log("________imdbDetails in getMOvieDetails", imdbDetails);
+                    //       callback(imdbDetails) //parse IMBD data and send it back to iterateThroughMovies()
+                    //     });
+                    // }
+                    //
+                    // router.post('/results', function(req, res) {          //process.env.API_KEY //2fb112ab
+                    //   request('http://www.omdbapi.com/?s=' + req.body.name + '&apikey=2fb112ab', function(error, response, body) {
+                    //     var data = JSON.parse(body);
+                    //     var movieList = data.Search;
+                    //     dbAndApi.movieList = movieList;
+                    //     for (var i = 0; i < 6; i++) {
+                    //       ids.push(movieList[i].imdbID); // add OMDB movie ID's to ids array
+                    //     };
+                    //     iterateThroughMovies( function(x) { //add imdbResults to dbAndAPI as we iterateThroughMovies()
+                    //       dbAndApi.imdbResults = imdbResults;
+                    //     });
+                    //       db.movie.findOne( {
+                    //         where: { name: req.body.name }
+                    //       }).then(function(movie) {
+                    //         // console.log('PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP');
+                    //         // console.log("_______ movie: ", movie);
+                    //         dbAndApi.movie = movie;
+                    //         console.log("________ dbAndApi: ", dbAndApi);
+                    //         res.render('movies/results', {dbAndApi: dbAndApi });
+                    //       }).catch(function(error) {
+                    //         console.log("FOOFOOFOOFOOFOOFOOFOOFOOFOOFOOFOOFOOFOOFOO");
+                    //         res.status(400).render('main/404'); //ToDO: make 404 page work
+                    //       });
+                    //   });
+                    // });
+                    // //use series async
+// api call
+  //.then API call
+    //.then logic
+      //res.render
+// var dbAndApi = {};
+// var imdbResults = {};
+// var ids = [];
+
+// router.post('/results', function(req, res) {
+//   var ombdData = function(callback) {
+//     request('http://www.omdbapi.com/?s=' + req.body.name + '&apikey=2fb112ab', function(error, response, body) {
+//       var data = JSON.parse(body);
+//       var movieList = data.Search;
+//       for (var i = 0; i < 6; i++) {
+//         ids.push(movieList[i].imdbID); // add OMDB movie ID's to ids array
+//       }
+//       var omdbFinal = callback;
+//       dbAndApi.omdbFinal = omdbFinal
+//       callback(null, movieList);
+//     });
+//   }
+//
+//                   var imdbData = function(callback) {
+//                     var imdbDetails = [];
+//                     iterateThroughMovies( function(x) { //add imdbResults to dbAndAPI as we iterateThroughMovies()
+//
+//                       // for (var j=0; j <6; j++) {
+//                         // request('https://theimdbapi.org/api/movie?movie_id=' + ids[j], function(error, response, body) {
+//                         //   var data = JSON.parse(body);
+//                         //   imdbDetails.push(data[j]);
+//                           // console.log("____data: ", data);
+//                           // console.log("______imdbDetails: ", imdbDetails);
+//                         // });
+//                         // imdbResults.push(imdbDetails[j]); //push details to results
+//                         // imdbResults.imdbDetails = imdbDetails;
+//                         // console.log("________imdbDetails1: ", imdbDetails);
+//                       // }
+//                     // var imdbFinal = callback;
+//                     // dbAndApi.imdbFinal = imdbFinal;
+//                     // callback(imdbResults);
+//                     // console.log("________imdbDetails2: ", imdbDetails);
+//                   });
+//                   dbAndApi.imdbResults = imdbResults; //EVERYHTING PRIOR TO THIS NEEDS TO BE SLWOED DOWN... MAYBE ANOTHER ASYNC.SERIES FOR EVERYTHING PRIOR...PSEUDOCODE THAT
+//                   console.log("________imdbDetails2: ", imdbDetails);
+//                     console.log("_______imdbResults: ", imdbResults);
+//                     console.log("_________dbAndApi: ", dbAndApi);
+//                   };
+//
+//   var dbData = function(callback) {
+//     db.movie.findOne( {
+//       where: { name: req.body.name }
+//     }).then(function(movie) {
+//       var dbFinal = callback;
+//       dbAndApi.dbFinal = dbFinal;
+//       callback(null, movie);
+//     });
+//   }
+//   async.series([ombdData, imdbData, dbData], function(err, results) {
+//     // dbAndApi.results = results;
+//     // console.log("__________results: ", results);
+//     console.log("______imdbResults in .series: ", imdbResults);
+//     // console.log("++_____________++ dbAndApi.ombdFinal: ", dbAndApi.omdbFinal);
+//     // console.log("++_____________++ dbAndApi.imdbFinal: ", dbAndApi.imdbFinal);
+//     res.render('movies/results', {dbAndApi: dbAndApi });
+//   });
+// });
 
 router.get('/add', isLoggedIn, function(req, res) {
   res.render('movies/add');
@@ -113,17 +254,6 @@ router.delete('/:id', isLoggedIn, function(req, res) {
   });
 });
 
-// router.get('/:id/edit', function(req, res) {
-//   db.movie.findOne(
-//     { where: { id: req.params.id } }
-//   ).then(function(movie) {
-//     // console.log("______movie.name in EDIT: ", movie.name);
-//     res.render('movies/edit', {movie: movie });
-//   }).catch(function(error) {
-//     res.status(400).render('main/404'); //ToDO: make 404 page work
-//   });
-// });
-//ToDo: clean up routes - make edit part of /:id adn do route.put to /:id
 router.put('/:id/:name', function(req, res) {
   db.movie.update(
     { name: req.params.name },
@@ -137,24 +267,6 @@ router.put('/:id/:name', function(req, res) {
   });
 });
 
-// router.post('/', isLoggedIn, function(req, res) {
-//   console.log("__________add movie to database", req.body.name);
-//   db.movie.findOrCreate({
-//     name: req.body.name
-//   }).spread(function(user, created) {
-//     if (created) {
-//         res.redirect('/movies');
-//     } else {
-//       // if not created, the email already exists
-//       req.flash('error', 'movie already exists');  //FLASH
-//       res.redirect('/movies/add');
-//     }
-//   }).catch(function(error) {
-//     // FLASH
-//     req.flash('error', error.message);
-//     res.redirect('/auth/signup');
-//   });
-// });
 router.post('/', isLoggedIn, function(req, res) {
   db.movie.create({
     name: req.body.name

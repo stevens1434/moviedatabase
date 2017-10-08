@@ -38,3 +38,8 @@ $('.edit').on('click', function(e) {
      window.location.reload();
   });
 });
+
+$('#submit').on('click', function(e) {
+  console.log('submit button clicked!!!@@@!!!');
+  $('$manyFound').innerhtml = '';
+});

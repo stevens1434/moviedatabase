@@ -6,6 +6,7 @@ var $ = require('jQuery')
 var path = require('path');
 var request = require('request');
 var db = require('./models');
+var async = require('async');
 // var cookieSession = require('cookie-session');
 var app = express();
 
@@ -61,7 +62,7 @@ app.get('/', function(req, res) {
   res.render('index');
 })
 
-app.get('/search', isLoggedIn, function(req, res) {
+app.get('/search', function(req, res) {
   // db.user.find( { //TRYING TO PASS USER INFO IN
   //   where: { name: req.body.name }
   // }).then(function(user) {

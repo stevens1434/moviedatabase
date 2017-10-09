@@ -62,6 +62,10 @@ app.get('/', function(req, res) {
   res.render('index');
 })
 
+app.get('/404', function(req, res) {
+  res.render('main/404');
+})
+
 app.get('/search', function(req, res) {
   // db.user.find( { //TRYING TO PASS USER INFO IN
   //   where: { name: req.body.name }

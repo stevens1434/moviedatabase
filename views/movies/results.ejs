@@ -1,23 +1,27 @@
 <link rel="stylesheet" type="text/css" href="../public/css/style.css" />
 
-
 <h1 class="h1head"><%= results[2].dataValues.name %></h1>
 
 
 <a href="/">Home</a> |
+<a href="/profile">Profile</a> |
 <a href="/search">Search</a> |
 <a href="/movies">All Movies</a>
 <br><br>
 
 
 <script
+  rel="preload"
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="../public/js/movies.js"></script>
 
+<%= results[1][6].cast[0].character %>
+<br>
 <%= results[1][0].poster.large %>
+
 
     <div id="manyFound">
     <h4>We found multiple results for that title:</h4> <br>
@@ -31,22 +35,22 @@
                     <div class="animate-box">
                     </div>
                       <div class="fh5co-desc">
-                            <a href="#" class="image-popup fh5co-board-img" title="Photo">
-                              <img src="<%= results[1][i].poster.large %>" alt="IMAGE GOES HERE"></a>
-                        <div id="subtitle"><strong><%= results[1][i].title %></strong></div>
-                        <div id="describe"><br><%= results[1][i].description %></div>
-                        <br>Release Year: <%= results[1][i].year %>
-                        <br>Length: <%= results[1][i].length %><br>
-                        <% for (var j = 0; j < 2; j++) { %>
-                          <%= results[1][i].genre[j] %>
-                        <% } %>
-                        <br>Score: <%= results[1][i].rating %>
+                            <a href="#" class="image-popup clear fh5co-board-img" title="Photo">
+                              <img class="clear"  src="<%= results[1][i].poster.large %>" alt="IMAGE GOES HERE"></a>
+                        <div class="clear"  id="subtitle"><strong><a href="<%= results[1][i].url.url %>"><%= results[1][i].title %></a></strong></div>
+                        <div class="clear"  id="describe"><br><%= results[1][i].description %></div>
+                        <br><p class="clear"> Release Year: <%= results[1][i].year %></p>
+                        <p class="clear"> Length: <%= results[1][i].length %> Minutes</p>
+                        <p class="clear"> Rating: <%= results[1][i].content_rating %></p>
+                          <% for (var j = 0; j < 2; j++) { %>
+                             <p class="clear" id="genreList"> <%= results[1][i].genre[j] %></p>,
+                          <% } %>
+                        <p class="clear"> Score: <%= results[1][i].rating %></p>
                         <br>Actors:
                         <% for (var k = 0; k < 3; k++) { %>
-                          <br><%= results[1][i].stars[k] %>
+                          <p class="clear"> <%= results[1][i].stars[k] %></p>
+
                         <% } %>
-                        <br>Rating: <%= results[1][i].content_rating %>
-                        <br>Website: <%= results[1][i].url %>
                     </div>
                   </div>
                 </div>

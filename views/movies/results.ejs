@@ -17,9 +17,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="../public/js/movies.js"></script>
 
-
-
-
+<%= results[1][0].poster.large %>
 
     <div id="manyFound">
     <h4>We found multiple results for that title:</h4> <br>
@@ -33,11 +31,8 @@
                     <div class="animate-box">
                     </div>
                       <div class="fh5co-desc">
-                        <% if (results[1].poster === !undefined) { %>
-                          <a href="<%= results[1].poster.large %>" class="image-popup fh5co-board-img" title="Photo"><img src="<%= results[1].poster.large %>" alt="IMAGE GOES HERE"></a>
-                        <% } else {%>
-                          <img src="http://egotvonline.com/wp-content/uploads/2011/10/404error17-300x230.jpg">
-                        <% } %>
+                            <a href="#" class="image-popup fh5co-board-img" title="Photo">
+                              <img src="<%= results[1][i].poster.large %>" alt="IMAGE GOES HERE"></a>
                         <div id="subtitle"><strong><%= results[1][i].title %></strong></div>
                         <div id="describe"><br><%= results[1][i].description %></div>
                         <br>Release Year: <%= results[1][i].year %>

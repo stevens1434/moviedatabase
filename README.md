@@ -6,7 +6,7 @@ It also gives additional information on your movie based on IMDB information.
 ## Screenshots
 
 ### Homepage
-![Alt text](GA/Unit 2/Movies/home-screen.png?raw=true "Optional Title")
+![Alt text](GA/Unit 2/Movies/home-screen.png)
 
 ### Movie search
 ![Alt text](GA/Unit 2/Movies/search.png?raw=true "Optional Title")

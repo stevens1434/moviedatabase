@@ -7688,6 +7688,10 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 20px;
 }
 
+.thisbutton {
+  width: 230px;
+}
+
 img {
   height: 500px;
 }

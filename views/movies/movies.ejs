@@ -1,6 +1,7 @@
 <link rel="stylesheet" type="text/css" href="../public/css/style.css" />
 
-These are movies
+<h1>Your Movies:</h1>
+<br>
 <ul>
 <% for (i = 0; i < movie.length; i++) { %>
   <li><a href="/movies/<%= movie[i].id %>"><%= movie[i].name %></a></li>
@@ -15,8 +16,7 @@ These are movies
 <h4>Add Movie:</h4>
 <form action="/movies" method="POST">
   <div class="form-group">
-    <label for="name">Movie Name:</label>
-    <input id="name" class="form-control" type="name" name="name">
+    <input id="name" class="form-control" type="name" name="name" placeholder="Enter New Movie Name...">
   </div>
   <input class="btn btn-primary" type="submit">
 </form>

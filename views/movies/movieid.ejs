@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="../public/css/style.css" />
 
-<%= movie.name %>
+<h1><%= movie.name %></h1>
 
 <br>
 <br>
@@ -14,15 +14,15 @@
 <br>
 <h4> Edit and Delete Movie </h4>
 <br>
-<form id="form" action="/movies/<%= movie.id %>" method="POST">
+<form id="form-group" action="/movies/<%= movie.id %>" method="POST">
   <div class="form-group">
 
-    <input id="editname" class="editname" type="text" name="editname">
-    <input class="btn btn-success edit" value="Edit <%= movie.name %>" id="edit" type="Submit">
+    <input id="editname" class="editname form-control" type="text" name="editname">
+    <input class="btn btn-success edit thisbutton" value="Edit <%= movie.name %>" id="edit" type="Submit">
   </div>
 </form>
 <br>
-<a href="/movies/<%= movie.id %>" id="delete-link" class='btn btn-danger delete-link'>Delete <%= movie.name %></a>
+<a href="/movies/<%= movie.id %>" id="delete-link" class='btn btn-danger delete-link thisbutton'>Delete <%= movie.name %></a>
 
 
 <script

@@ -3,6 +3,20 @@
 This app is was designed to sort through your movies and find the one that you want to watch.
 It also gives additional information on your movie based on IMDB information.
 
+## Screenshots
+
+### Homepage
+![Alt text](GA/Unit 2/Movies/home-screen.png?raw=true "Optional Title")
+
+### Movie search
+![Alt text](GA/Unit 2/Movies/search.png?raw=true "Optional Title")
+
+### Search Results
+![Alt text](GA/Unit 2/Movies/results?raw=true "Optional Title")
+
+### All Movies
+
+![Alt text](GA/Unit 2/Movies/all-movies?raw=true "Optional Title")
 ## Technologies Used
 
 - HTML
@@ -14,7 +28,7 @@ It also gives additional information on your movie based on IMDB information.
 - IMDB API
 - Postgres
 
-## process
+## Process
 
 ### Approach
 

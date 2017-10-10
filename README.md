@@ -6,7 +6,7 @@ It also gives additional information on your movie based on IMDB information.
 ## Screenshots
 
 ### Homepage
-![Alt text](/GA/Unit 2/Movies/home-screen.png)
+![Alt text](http://res.cloudinary.com/stevens1434/image/upload/v1507626895/home-screen_mvvxpk.png)
 
 ### Movie search
 ![Alt text](GA/Unit 2/Movies/search.png?raw=true "Optional Title")

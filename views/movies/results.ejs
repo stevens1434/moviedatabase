@@ -12,13 +12,12 @@
 
 <script
   rel="preload"
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha156-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.1.1/jquery.min.js"></script>
 <script src="../public/js/movies.js"></script>
 
-<%= results[1][6].cast[0].character %>
 <br>
 <%= results[1][0].poster.large %>
 
@@ -33,16 +32,23 @@
                 <div id="fh5co-board" data-columns>
                   <div class="item">
                     <div class="animate-box">
+                      <% if ( results[1][i] === undefined) { %>
+                        <a href="#" class="image-popup fh5co-board-img" title="Photo"><img src="https://www.jordans.com/~/media/jordans%10redesign/no-image-found.ashx?h=175&la=en&w=175&hash=F87BC13F17E37D57E1A0B1CC6E1E3EEE311AAD5B" alt="IMAGE GOES HERE"></a>
+                        <% } else { %>
+                        <a href="<%= results[1][i].poster.large %>" class="image-popup fh5co-board-img" title="Photo"><img src="<%= results[1][i].poster.large %>" alt="IMAGE GOES HERE"></a>
+                      <% } %>
                     </div>
+
+                    <% if ( results[1][i] === undefined) { %>
+                      PAGE LOADING...
+                      <% } else { %>
                       <div class="fh5co-desc">
-                            <a href="#" class="image-popup clear fh5co-board-img" title="Photo">
-                              <img class="clear"  src="<%= results[1][i].poster.large %>" alt="IMAGE GOES HERE"></a>
-                        <div class="clear"  id="subtitle"><strong><a href="<%= results[1][i].url.url %>"><%= results[1][i].title %></a></strong></div>
+                        <div class="clear"  id="subtitle"><strong><%= results[1][i].title %></a></strong></div>
                         <div class="clear"  id="describe"><br><%= results[1][i].description %></div>
                         <br><p class="clear"> Release Year: <%= results[1][i].year %></p>
                         <p class="clear"> Length: <%= results[1][i].length %> Minutes</p>
                         <p class="clear"> Rating: <%= results[1][i].content_rating %></p>
-                          <% for (var j = 0; j < 2; j++) { %>
+                          <% for (var j = 0; j < 1; j++) { %>
                              <p class="clear" id="genreList"> <%= results[1][i].genre[j] %></p>,
                           <% } %>
                         <p class="clear"> Score: <%= results[1][i].rating %></p>
@@ -52,6 +58,9 @@
 
                         <% } %>
                     </div>
+                    <% } %>
+
+
                   </div>
                 </div>
               </div>

@@ -49,7 +49,7 @@ router.post('/results', function(req, res) {
           ids.push(movieList[i].imdbID); // add OMDB movie ID's to ids array
         }
         var omdbFinal = callback;
-        dbAndApi.omdbFinal = omdbFinal;
+        dbAndApi.omdbFinal = omdbFinal; //May be uneccesary
         callback(null, movieList);
       });
     }
@@ -72,7 +72,6 @@ router.post('/results', function(req, res) {
         callback(null, movie);
       });
     }
-
       async.series([ombdData, imdbData, dbData], function(err, results) {
         // dbAndApi.results = results;
         // console.log("__________results: ", results);
@@ -84,8 +83,10 @@ router.post('/results', function(req, res) {
         // console.log("++_____________++ dbAndApi.imdbFinal: ", dbAndApi.imdbFinal);
 
             // console.log("XXXXXX________XXXXXX err:", TypeError.prototype.name);
-            console.log("_____CAST: ",results[1][6].cast[0]);
-            // console.log("______ async.series - results: ", results[1]);
+            // console.log("_____CAST: ",results[1][6].cast[0]);
+            // console.log("______ async.series - results all: ", results);
+            console.log("______ async.series - results1: ", results[1]);
+            console.log("______ async.series - results2: ", results[2]);
             // setTimeout(function() {
             res.render('movies/results', {results: results});
             // }, 2000);

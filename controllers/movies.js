@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var passport = require('../config/ppConfig');
 var request = require('request');
 var omdb = require('omdb');
-var $ = require('jQuery');
+
 var session = require('express-session');
 var flash = require('connect-flash');
 var isLoggedIn = require('../middleware/isLoggedIn');

@@ -7612,6 +7612,7 @@ h1, h2, h3, h4, h5, h6 {
   padding-top: 5em;
   width: 321px;
   display: inline-block;
+  height: 1300px;
 
 }
 
@@ -7667,10 +7668,28 @@ h1, h2, h3, h4, h5, h6 {
 #fh5co-board .item .image-popup:hover img {
   opacity: .5;
 }
+#fh5co-board {
+  height: 1300px;
+}
+.fh5co-desc{
+  height: 700;
+}
 
 .js .animate-box {
   opacity: 0;
   width: 321px;
+}
+
+#h1subhead {
+  font-style: italic;
+}
+
+#subtitle {
+  font-size: 20px;
+}
+
+img {
+  height: 500px;
 }
 
 pre {

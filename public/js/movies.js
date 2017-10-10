@@ -65,6 +65,11 @@ var reLoad = function () {
 //   });
 // });
 
+if ($('loading') === PAGE LOADING...) {
+  window.location.reload();
+} else {
+  console.log("page loaded");
+}
 
 // var loaded = false;
 //

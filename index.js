@@ -67,21 +67,19 @@ app.get('/404', function(req, res) {
 })
 
 app.get('/search', function(req, res) {
-  // db.user.find( { //TRYING TO PASS USER INFO IN
-  //   where: { name: req.body.name }
-  // }).then(function(user) {
-    // res.render('search', {user: user});
-  // })
-  res.render('search');
-})
+  db.movie.findAll( { //TRYING TO PASS USER INFO IN
+    order: [["name", "ASC"]]
+  }).then(function(movie) {
+    res.render('search', {movie: movie});
+  });
+});
 
 app.get('/profile', isLoggedIn, function(req, res) {
-  // db.user.find( {
-  //   where: { id: req.params.id }
-  // }).then(function(user) {
-  //   // console.log("______movie", movie);
-  res.render('profile');
-// });
+  db.user.findOne( {
+    where: { id: req.body.id }
+  }).then(function(user) {
+  res.render('profile', { user: user });
+  });
 });
 
 app.use('/auth', require('./controllers/auth'));

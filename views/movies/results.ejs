@@ -1,6 +1,7 @@
 <link rel="stylesheet" type="text/css" href="../public/css/style.css" />
 
-<h1 class="h1head"><%= results[2].dataValues.name %></h1>
+<h1 class="h1head"><strong><%= results[2].dataValues.name %></strong></h1>
+<h3 id"h1subhead">This movie is in your database.</h3>
 
 
 <a href="/">Home</a> |
@@ -18,8 +19,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.1.1/jquery.min.js"></script>
 <script src="../public/js/movies.js"></script>
 
-<br>
-<%= results[1][0].poster.large %>
+
 
 
     <div id="manyFound">
@@ -40,22 +40,21 @@
                     </div>
 
                     <% if ( results[1][i] === undefined) { %>
-                      PAGE LOADING...
+                      <p id="loading">PAGE LOADING...</p>
                       <% } else { %>
                       <div class="fh5co-desc">
-                        <div class="clear"  id="subtitle"><strong><%= results[1][i].title %></a></strong></div>
+                        <div class="clear"  id="subtitle"><strong><a href="<%= results[1][i].url.url %>"> <%= results[1][i].title %> </a></strong></div>
                         <div class="clear"  id="describe"><br><%= results[1][i].description %></div>
-                        <br><p class="clear"> Release Year: <%= results[1][i].year %></p>
-                        <p class="clear"> Length: <%= results[1][i].length %> Minutes</p>
-                        <p class="clear"> Rating: <%= results[1][i].content_rating %></p>
+                        <br><p class="clear"> <strong>Release Year:</strong> <%= results[1][i].year %></p>
+                        <p class="clear"> <strong>Length: </strong> <%= results[1][i].length %> Minutes</p>
+                        <p class="clear"> <strong>Rating: </strong> <%= results[1][i].content_rating %></p>
                           <% for (var j = 0; j < 1; j++) { %>
-                             <p class="clear" id="genreList"> <%= results[1][i].genre[j] %></p>,
+                             <p class="clear" id="genreList"><strong>Genre: </strong> <%= results[1][i].genre[j] %></p>
                           <% } %>
-                        <p class="clear"> Score: <%= results[1][i].rating %></p>
-                        <br>Actors:
+                        <p class="clear"> <strong>Score:</strong> <%= results[1][i].rating %></p>
+                        <br><strong>Actors: </strong>:
                         <% for (var k = 0; k < 3; k++) { %>
-                          <p class="clear"> <%= results[1][i].stars[k] %></p>
-
+                          <ul class="clear"> <%= results[1][i].stars[k] %></ul>
                         <% } %>
                     </div>
                     <% } %>

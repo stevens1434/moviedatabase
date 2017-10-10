@@ -2,10 +2,17 @@
 
 <h2>Search</h2>
 
+<%= movie[0].name %>
+
 <form action="/movies/results" method="POST">
   <div class="form-group">
     <label for="name">Search</label>
-    <input id="name" class="form-control" type="text" name="name" placeholder="Enter Movie Name...">
+    <input list="movielist" id="name" class="form-control" type="text" name="name" autofocus placeholder="Enter Movie Name...">
+      <datalist id="movielist">
+        <% for (var i = 0; i < 10; i++) { %>
+          <option value="<%= movie[i].name %>">
+        <% } %>
+    </datalist>
     <input id="submit" class="btn btn-primary" type="submit">
   </div>
 </form>

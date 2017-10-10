@@ -19,9 +19,10 @@ var imdbPoster = [];
 var ids = [];
 
 var iterateThroughMovies = function(callback){
+
   for (var j = 0; j < 6; j++) {
       getMovieDetails(j, function(data){
-        imdbResults.push(data);
+        imdbResults.unshift(data);
       });
       callback(imdbResults);
   };
@@ -29,12 +30,15 @@ var iterateThroughMovies = function(callback){
 }
 
 var getMovieDetails = function(j, callback){
-    request('https://theimdbapi.org/api/movie?movie_id=' + ids[j], function(error, response, body) {
+    request('https://theimdbapi.org/api/movie?movie_id=' + ids[j] + "&zzz=123", function(error, response, body) {
       var data = JSON.parse(body);
       callback(data);
     });
 }
 router.post('/results', function(req, res) {
+  // res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  // res.header('Expires', '-1');
+  // res.header('Pragma', 'no-cache');
     var ombdData = function(callback) {
       request('http://www.omdbapi.com/?s=' + req.body.name + '&apikey=2fb112ab', function(error, response, body) {
         var data = JSON.parse(body);
@@ -45,8 +49,9 @@ router.post('/results', function(req, res) {
           imdbPoster.push(movieList[p].Poster);
           // console.log("___posters: ", movieList[p].Poster);
         }
+        ids = [];
         for (var i = 0; i < 6; i++) {
-          ids.push(movieList[i].imdbID); // add OMDB movie ID's to ids array
+          ids.unshift(movieList[i].imdbID); // add OMDB movie ID's to ids array
         }
         var omdbFinal = callback;
         dbAndApi.omdbFinal = omdbFinal; //May be uneccesary
@@ -60,7 +65,7 @@ router.post('/results', function(req, res) {
       setTimeout(function() {
         // console.log("_____XSDFSDF_____imdbResults in setTimeout in imdbData", imdbResults);
         callback(null, imdbResults);
-      }, 2000);
+      }, 2500);
       // console.log("__________imdbResults: ", imdbResults);
     }
     var dbData = function(callback) {
@@ -81,12 +86,13 @@ router.post('/results', function(req, res) {
         // console.log("_______ omdb posters: ", results[1][0]);
         // console.log("++_____________++ dbAndApi.ombdFinal: ", dbAndApi.omdbFinal);
         // console.log("++_____________++ dbAndApi.imdbFinal: ", dbAndApi.imdbFinal);
+        console.log("_________ids: ", ids);
 
             // console.log("XXXXXX________XXXXXX err:", TypeError.prototype.name);
             // console.log("_____CAST: ",results[1][6].cast[0]);
             // console.log("______ async.series - results all: ", results);
-            console.log("______ async.series - results1: ", results[1]);
-            console.log("______ async.series - results2: ", results[2]);
+            // console.log("______ async.series - results1: ", results[1]);
+            // console.log("______ async.series - results2: ", results[2]);
             // setTimeout(function() {
             res.render('movies/results', {results: results});
             // }, 2000);

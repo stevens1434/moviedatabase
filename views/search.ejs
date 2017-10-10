@@ -8,7 +8,7 @@
     <input list="movielist" id="name" class="form-control" type="text" name="name" autofocus placeholder="Enter Movie Name...">
       <datalist id="movielist">
         <% for (var i = 0; i < 10; i++) { %>
-          <option value="<%= movie[i].name %>">
+          <option value="<%= movie[i].dataValues.name %>">
         <% } %>
     </datalist>
     <input id="submit" class="btn btn-primary" type="submit">

@@ -50,10 +50,11 @@ app.get('/404', function(req, res) {
 })
 
 app.get('/search', function(req, res) {
-  db.movie.findAll( { //TRYING TO PASS USER INFO IN
+  db.movie.findAll( {
     order: [["name", "ASC"]]
   }).then(function(movie) {
     res.render('search', {movie: movie});
+    // console.log("______ movie in SEARCH get route", movie[0].dataValues.name);
   });
 });
 

@@ -2,7 +2,7 @@ require('dotenv').config();
 var express = require('express');
 var ejsLayouts = require('express-ejs-layouts');
 var bodyParser = require('body-parser');
-var $ = require('jQuery')
+
 var path = require('path');
 var request = require('request');
 var db = require('./models');

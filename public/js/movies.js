@@ -1,35 +1,40 @@
 //DELETE MOVIE
   $('#delete-link').on('click', function(e) {
     console.log("________ delete link clicked");
+    console.log("++++url: ", $(this).attr('href'));
     e.preventDefault();
     $.ajax({
       // url: '/movies',
       method: 'DELETE',
       url: $(this).attr('href')
-    }).done(function(data) {
+    }).done(function(url) {
       // get data returned from the DELETE route
-      console.log("___________  DELETE in ajax");
+      console.log("___________3 url in DELETE in ajax: ", url);
       // do stuff when the DELETE action is complete
+      // res.render('/');
       window.location=document.referrer;
     });
   });
 
 //EDIT MOVIE
-$('.edit').on('click', function(e) {
+$('#editmovie').on('click', function(e) {
+  console.log("AJAX ACTION 1 ______: ", action);
   e.preventDefault();
+  // action = $(this).parent().attr('action');
   action = action + "/" + $('[name=editname]').val();
-  console.log("_____ action in edit ajax", action)
+  // console.log("___________AJAX 2", action);
   $.ajax({
     method: 'PUT',
+    //need to pass the text from "name='editname'" into the URL
     url: action
   }).done(function(data) {
-    console.log("_____ AJAX EDIT MOVIES");
+    // get data returned from the PUT route
+    // console.log("___________.done() in AJAX, data: ", data);
     setTimeout(function() {
       window.location.reload();
     }, 1);
   });
 });
-
 $('#submit').on('click', function(e) {
   console.log('submit button clicked!!!@@@!!!');
   $('.clear').empty();

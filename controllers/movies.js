@@ -101,11 +101,12 @@ router.get('/:id', function(req, res) {
 
 router.delete('/:id', function(req, res) {
   db.movie.destroy( {
-    where: { id: req.params.id }
-  }).then(function(data) {
-    console.log("_________ data delete in controllers/movies.js: ", data);
+    where: { id: req.params.id },
+    include: [db.movie]
+  }).then(function(movie) {
+    console.log("_________2 movie delete in route(controllers/movies.js): ", movie);
     // res.redirect("/search");
-    res.render('search');
+    res.redirect('/profile');
    });
 });
 

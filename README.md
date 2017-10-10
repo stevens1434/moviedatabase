@@ -9,14 +9,14 @@ It also gives additional information on your movie based on IMDB information.
 ![Alt text](http://res.cloudinary.com/stevens1434/image/upload/v1507626895/home-screen_mvvxpk.png)
 
 ### Movie search
-![Alt text](GA/Unit 2/Movies/search.png?raw=true "Optional Title")
+![Alt text](http://res.cloudinary.com/stevens1434/image/upload/v1507626893/search_wz95ws.png)
 
 ### Search Results
-![Alt text](GA/Unit 2/Movies/results?raw=true "Optional Title")
+![Alt text](http://res.cloudinary.com/stevens1434/image/upload/v1507626897/results_n7rbws.png)
 
 ### All Movies
 
-![Alt text](GA/Unit 2/Movies/all-movies?raw=true "Optional Title")
+![Alt text](http://res.cloudinary.com/stevens1434/image/upload/v1507626893/all-movies_bihg76.png)
 ## Technologies Used
 
 - HTML

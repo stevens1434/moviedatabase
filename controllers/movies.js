@@ -115,6 +115,7 @@ router.put('/:id/:name', function(req, res) {
     { where: { id: req.params.id },
     include: [db.movie]
   }).then(function(movie) {
+    console.log("put (edit) AJAX______________", movie);
     res.render('movies/movieid', {movie: movie });
   }).catch(function(error) {
     res.status(400).render('main/404'); //ToDO: make 404 page work

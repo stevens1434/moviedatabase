@@ -8,7 +8,7 @@
       url: $(this).attr('href')
     }).done(function(data) {
       // get data returned from the DELETE route
-      console.log("___________ done function in DELETE ajax");
+      console.log("___________  DELETE in ajax");
       // do stuff when the DELETE action is complete
       window.location=document.referrer;
     });
@@ -18,10 +18,12 @@
 $('.edit').on('click', function(e) {
   e.preventDefault();
   action = action + "/" + $('[name=editname]').val();
+  console.log("_____ action in edit ajax", action)
   $.ajax({
     method: 'PUT',
     url: action
   }).done(function(data) {
+    console.log("_____ AJAX EDIT MOVIES");
     setTimeout(function() {
       window.location.reload();
     }, 1);

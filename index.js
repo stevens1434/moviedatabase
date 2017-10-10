@@ -74,12 +74,9 @@ app.get('/search', function(req, res) {
   });
 });
 
+
 app.get('/profile', isLoggedIn, function(req, res) {
-  db.user.findOne( {
-    where: { id: req.body.id }
-  }).then(function(user) {
-  res.render('profile', { user: user });
-  });
+  res.render('profile');
 });
 
 app.use('/auth', require('./controllers/auth'));

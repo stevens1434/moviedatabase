@@ -22,39 +22,22 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(ejsLayouts);
-// app.use(methodOverride('_method'))
 
-  /*
-   * setup the session with the following:
-   *
-   * secret: A string used to "sign" the session ID cookie, which makes it unique
-   * from application to application. We'll hide this in the environment
-   *
-   * resave: Save the session even if it wasn't modified. We'll set this to false
-   *
-   * saveUninitialized: If a session is new, but hasn't been changed, save it.
-   * We'll set this to true.
-   */
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: true,
   saveUninitialized: true
 }));
 
- // * Include the flash module by calling it within app.use().
- // * IMPORTANT: This MUST go after the session module
 app.use(flash());
 
 app.use(function(req, res, next) {
-  // before every route, attach the flash messages and current user to res.locals
   res.locals.alerts = req.flash();
   res.locals.currentUser = req.user;
   next();
 });
 
-//the WDI instructions say to do this at the top but DO NOT!
 var passport = require('./config/ppConfig');
-// initialize the passport configuration and session as middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -73,7 +56,6 @@ app.get('/search', function(req, res) {
     res.render('search', {movie: movie});
   });
 });
-
 
 app.get('/profile', isLoggedIn, function(req, res) {
   res.render('profile');

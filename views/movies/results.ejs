@@ -1,15 +1,17 @@
 <link rel="stylesheet" type="text/css" href="../public/css/style.css" />
 
-<h1 class="h1head"><strong><%= results[2].dataValues.name %></strong></h1>
-<h3 id"h1subhead">This movie is in your database.</h3>
+<h1 class="h1head indb"><strong><%= results[2].dataValues.name %></strong></h1><h4 class="indb">is in your database</h4>
 
+<br>
+<br>
 
 <a href="/">Home</a> |
 <a href="/profile">Profile</a> |
 <a href="/search">Search</a> |
 <a href="/movies">All Movies</a>
-<br><br>
 
+<br>
+<br>
 
 <script
   rel="preload"
@@ -19,54 +21,51 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.1.1/jquery.min.js"></script>
 <script src="../public/js/movies.js"></script>
 
+<h2>Search Results</h2>
 
-
-
-    <div id="manyFound">
-    <h4>We found multiple results for that title:</h4> <br>
-      <form id="manyForm" action="/search/results" method="GET">
-        <% for (var i = 0; i < 6; i++) { %>
-          <div id="fh5co-main">
-            <div class="container">
-              <div class="row">
-                <div id="fh5co-board" data-columns>
-                  <div class="item">
-                    <div class="animate-box">
-                      <% if ( results[1][i] === undefined) { %>
-                        <a href="#" class="image-popup fh5co-board-img" title="Photo"><img src="https://www.jordans.com/~/media/jordans%10redesign/no-image-found.ashx?h=175&la=en&w=175&hash=F87BC13F17E37D57E1A0B1CC6E1E3EEE311AAD5B" alt="IMAGE GOES HERE"></a>
-                        <% } else { %>
-                        <a href="<%= results[1][i].poster.large %>" class="image-popup fh5co-board-img" title="Photo"><img src="<%= results[1][i].poster.large %>" alt="IMAGE GOES HERE"></a>
+<div id="manyFound">
+  <h4>We found multiple results for that title:</h4>
+  <form id="manyForm" action="/search/results" method="GET">
+    <% for (var i = 0; i < 6; i++) { %>
+      <div id="fh5co-main">
+        <div class="container">
+          <div class="row">
+            <div id="fh5co-board" data-columns>
+              <div class="item">
+                <div class="animate-box">
+                  <% if ( results[1][i] === undefined) { %>
+                    <a href="#" class="image-popup fh5co-board-img" title="Photo"><img src="https://www.jordans.com/~/media/jordans%10redesign/no-image-found.ashx?h=175&la=en&w=175&hash=F87BC13F17E37D57E1A0B1CC6E1E3EEE311AAD5B" alt="IMAGE GOES HERE"></a>
+                    <% } else { %>
+                    <a href="<%= results[1][i].poster.large %>" class="image-popup fh5co-board-img" title="Photo"><img src="<%= results[1][i].poster.large %>" alt="IMAGE GOES HERE"></a>
+                  <% } %>
+                </div>
+                <% if ( results[1][i] === undefined) { %>
+                  <p id="loading">PAGE LOADING...</p>
+                  <% } else { %>
+                    <div class="fh5co-desc">
+                      <div class="clear"  id="subtitle"><strong><a href="<%= results[1][i].url.url %>"> <%= results[1][i].title %> </a></strong></div>
+                      <div class="clear"  id="describe"><br><%= results[1][i].description %></div>
+                        <br>
+                      <p class="clear"> <strong>Release Year:</strong> <%= results[1][i].year %></p>
+                      <p class="clear"> <strong>Length: </strong> <%= results[1][i].length %> Minutes</p>
+                      <p class="clear"> <strong>Rating: </strong> <%= results[1][i].content_rating %></p>
+                        <% for (var j = 0; j < 1; j++) { %>
+                           <p class="clear" id="genreList"><strong>Genre: </strong> <%= results[1][i].genre[j] %></p>
+                        <% } %>
+                      <p class="clear"> <strong>Score:</strong> <%= results[1][i].rating %></p>
+                      <br><strong>Actors: </strong>:
+                      <% for (var k = 0; k < 3; k++) { %>
+                        <ul class="clear"> <%= results[1][i].stars[k] %></ul>
                       <% } %>
                     </div>
-
-                    <% if ( results[1][i] === undefined) { %>
-                      <p id="loading">PAGE LOADING...</p>
-                      <% } else { %>
-                      <div class="fh5co-desc">
-                        <div class="clear"  id="subtitle"><strong><a href="<%= results[1][i].url.url %>"> <%= results[1][i].title %> </a></strong></div>
-                        <div class="clear"  id="describe"><br><%= results[1][i].description %></div>
-                        <br><p class="clear"> <strong>Release Year:</strong> <%= results[1][i].year %></p>
-                        <p class="clear"> <strong>Length: </strong> <%= results[1][i].length %> Minutes</p>
-                        <p class="clear"> <strong>Rating: </strong> <%= results[1][i].content_rating %></p>
-                          <% for (var j = 0; j < 1; j++) { %>
-                             <p class="clear" id="genreList"><strong>Genre: </strong> <%= results[1][i].genre[j] %></p>
-                          <% } %>
-                        <p class="clear"> <strong>Score:</strong> <%= results[1][i].rating %></p>
-                        <br><strong>Actors: </strong>:
-                        <% for (var k = 0; k < 3; k++) { %>
-                          <ul class="clear"> <%= results[1][i].stars[k] %></ul>
-                        <% } %>
-                    </div>
-                    <% } %>
-
-
-                  </div>
-                </div>
+                  <% } %>
               </div>
             </div>
           </div>
-            <% } %>
-          <br>
-        <input id="selectFilmButton" class="btn btn-danger" type="submit" value="Select This Film">
-      </form>
-    </div>
+        </div>
+      </div>
+    <% } %>
+      <br>
+    <input id="selectFilmButton" class="btn btn-danger" type="submit" value="Select This Film">
+  </form>
+</div>

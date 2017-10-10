@@ -12,18 +12,19 @@
 
 <br>
 <br>
+
 <h4> Edit and Delete Movie </h4>
 <br>
 <form id="form-group" action="/movies/<%= movie.id %>" method="POST">
   <div class="form-group">
-
     <input id="editname" class="editname form-control" type="text" name="editname">
     <input class="btn btn-success edit thisbutton" value="Edit <%= movie.name %>" id="edit" type="Submit">
   </div>
 </form>
-<br>
-<a href="/movies/<%= movie.id %>" id="delete-link" class='btn btn-danger delete-link thisbutton'>Delete <%= movie.name %></a>
 
+<br>
+
+<a href="/movies/<%= movie.id %>" id="delete-link" class='btn btn-danger delete-link thisbutton'>Delete <%= movie.name %></a>
 
 <script
   src="https://code.jquery.com/jquery-3.2.1.slim.js"

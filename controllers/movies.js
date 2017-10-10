@@ -12,23 +12,19 @@ var flash = require('connect-flash');
 var isLoggedIn = require('../middleware/isLoggedIn');
 var async = require('async');
 
-
 var dbAndApi = {};
 var imdbResults = [];
 var imdbPoster = [];
 var ids = [];
 
 var iterateThroughMovies = function(callback){
-
   for (var j = 0; j < 6; j++) {
       getMovieDetails(j, function(data){
         imdbResults.unshift(data);
       });
       callback(imdbResults);
   };
-
 }
-
 var getMovieDetails = function(j, callback){
     request('https://theimdbapi.org/api/movie?movie_id=' + ids[j] + "&zzz=123", function(error, response, body) {
       var data = JSON.parse(body);
@@ -36,18 +32,13 @@ var getMovieDetails = function(j, callback){
     });
 }
 router.post('/results', function(req, res) {
-  // res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
-  // res.header('Expires', '-1');
-  // res.header('Pragma', 'no-cache');
     var ombdData = function(callback) {
       request('http://www.omdbapi.com/?s=' + req.body.name + '&apikey=2fb112ab', function(error, response, body) {
         var data = JSON.parse(body);
         var movieList = data.Search;
-        // console.log("____movieList______: ", movieList);
         imdbPoster = [];
         for (var p = 0; p < 6; p++) {
           imdbPoster.push(movieList[p].Poster);
-          // console.log("___posters: ", movieList[p].Poster);
         }
         ids = [];
         for (var i = 0; i < 6; i++) {
@@ -63,10 +54,8 @@ router.post('/results', function(req, res) {
       });
 
       setTimeout(function() {
-        // console.log("_____XSDFSDF_____imdbResults in setTimeout in imdbData", imdbResults);
         callback(null, imdbResults);
       }, 2500);
-      // console.log("__________imdbResults: ", imdbResults);
     }
     var dbData = function(callback) {
       db.movie.findOne( {
@@ -78,29 +67,9 @@ router.post('/results', function(req, res) {
       });
     }
       async.series([ombdData, imdbData, dbData], function(err, results) {
-        // dbAndApi.results = results;
-        // console.log("__________results: ", results);
-        // console.log("______dbAndApi in .series: ", dbAndApi);
-        // console.log("______imdbResults: ", imdbResults);
-        // console.log("_______ omdb posters: ", results[0][0].Poster);
-        // console.log("_______ omdb posters: ", results[1][0]);
-        // console.log("++_____________++ dbAndApi.ombdFinal: ", dbAndApi.omdbFinal);
-        // console.log("++_____________++ dbAndApi.imdbFinal: ", dbAndApi.imdbFinal);
         console.log("_________ids: ", ids);
-
-            // console.log("XXXXXX________XXXXXX err:", TypeError.prototype.name);
-            // console.log("_____CAST: ",results[1][6].cast[0]);
-            // console.log("______ async.series - results all: ", results);
-            // console.log("______ async.series - results1: ", results[1]);
-            // console.log("______ async.series - results2: ", results[2]);
-            // setTimeout(function() {
             res.render('movies/results', {results: results});
-            // }, 2000);
-            // res.render('movies/results', {results: results});
-            // console.log("_______ imdbPoster: ", imdbPoster);
       });
-
-
 })
 
 router.get('/add', function(req, res) {
@@ -159,6 +128,5 @@ router.post('/', isLoggedIn, function(req, res) {
     res.redirect('/movies');
   });
 });
-
 
 module.exports = router;

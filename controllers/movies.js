@@ -105,8 +105,6 @@ router.delete('/:id', function(req, res) {
     include: [db.movie]
   }).then(function(movie) {
     console.log("_________2 movie delete in route(controllers/movies.js): ", movie);
-    // res.redirect("/search");
-    // req.method = 'GET';
     res.redirect('/movies');
   }); //it says that it cannot find the profile
 });

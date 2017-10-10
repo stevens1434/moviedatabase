@@ -106,8 +106,9 @@ router.delete('/:id', function(req, res) {
   }).then(function(movie) {
     console.log("_________2 movie delete in route(controllers/movies.js): ", movie);
     // res.redirect("/search");
-    res.redirect('/profile');
-   });
+    // req.method = 'GET';
+    res.redirect('/movies');
+  }); //it says that it cannot find the profile
 });
 
 router.put('/:id/:name', function(req, res) {

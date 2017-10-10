@@ -7,9 +7,9 @@
       // url: '/movies',
       method: 'DELETE',
       url: $(this).attr('href')
-    }).done(function(url) {
+    }).done(function() {
       // get data returned from the DELETE route
-      console.log("___________3 url in DELETE in ajax: ", url);
+      // console.log("___________3 url in DELETE in ajax: ", url);
       // do stuff when the DELETE action is complete
       // res.render('/');
       window.location=document.referrer;
